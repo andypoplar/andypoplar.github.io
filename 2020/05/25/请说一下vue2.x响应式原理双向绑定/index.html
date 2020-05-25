@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>请说一下vue2.x响应式原理双向绑定 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">请说一下vue2.x响应式原理双向绑定</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 25, 2020&nbsp;&nbsp;12:34:38</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/vue/">vue</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/05/25/%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8Bvue2.x%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" class="leancloud-visitors view" data-flag-title="请说一下vue2.x响应式原理双向绑定">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <blockquote>
+<p>首先声明：仅此记录学习过程，有不当还请老哥指出。</p>
+</blockquote>
+<h4 id="1-理解"><a href="#1-理解" class="headerlink" title="1.理解"></a>1.理解</h4><p>Vue 数据双向绑定主要是指：<strong>数据变化更新视图，视图变化更新数据</strong>。其中，View变化更新Data，可以通过事件监听的方式来实现，所以 Vue数据双向绑定的工作主要是如何<strong>根据Data变化更新View</strong>。</p>
+<h4 id="2-简述"><a href="#2-简述" class="headerlink" title="2.简述"></a>2.简述</h4><h5 id="2-1-当你把一个普通的-JavaScript-对象传入-Vue-实例作为-data-选项，Vue-将遍历此对象所有的-property，并使用-Object-defineProperty-把这些-property-全部转为-getter-setter。"><a href="#2-1-当你把一个普通的-JavaScript-对象传入-Vue-实例作为-data-选项，Vue-将遍历此对象所有的-property，并使用-Object-defineProperty-把这些-property-全部转为-getter-setter。" class="headerlink" title="2.1 当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 Object.defineProperty 把这些 property 全部转为 getter/setter。"></a>2.1 当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">Object.defineProperty</a> 把这些 property 全部转为 getter/setter。</h5><h5 id="2-2-流程图"><a href="#2-2-流程图" class="headerlink" title="2.2 流程图"></a>2.2 流程图</h5><p><img src="https://img-blog.csdnimg.cn/20200525121445709.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDE5NDczMg==,size_16,color_FFFFFF,t_70" alt="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images"></p>
+<h5 id="2-3-具体在源码的体现：vue-src-core-observer-index-js"><a href="#2-3-具体在源码的体现：vue-src-core-observer-index-js" class="headerlink" title="2.3 具体在源码的体现：vue/src/core/observer/index.js"></a>2.3 具体在源码的体现：<a href="https://github.com/vuejs/vue/tree/0baa129d4cad44cf1847b0eaf07e95d4c71ab494" target="_blank" rel="noopener">vue</a>/<a href="https://github.com/vuejs/vue/tree/0baa129d4cad44cf1847b0eaf07e95d4c71ab494/src" target="_blank" rel="noopener">src</a>/<a href="https://github.com/vuejs/vue/tree/0baa129d4cad44cf1847b0eaf07e95d4c71ab494/src/core" target="_blank" rel="noopener">core</a>/<a href="https://github.com/vuejs/vue/tree/0baa129d4cad44cf1847b0eaf07e95d4c71ab494/src/core/observer" target="_blank" rel="noopener">observer</a>/<strong>index.js</strong></h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 64行  </span></span><br><span class="line">walk (obj: <span class="built_in">Object</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> keys = <span class="built_in">Object</span>.keys(obj)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; keys.length; i++) &#123;</span><br><span class="line">      defineReactive(obj, keys[i])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 135行</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  obj: Object,</span></span></span><br><span class="line"><span class="function"><span class="params">  key: string,</span></span></span><br><span class="line"><span class="function"><span class="params">  val: any,</span></span></span><br><span class="line"><span class="function"><span class="params">  customSetter?: ?Function,</span></span></span><br><span class="line"><span class="function"><span class="params">  shallow?: boolean</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-4-这些-getter-setter-对用户来说是不可见的，但是在内部它们让-Vue-能够追踪依赖，在-property-被访问和修改时通知变更。"><a href="#2-4-这些-getter-setter-对用户来说是不可见的，但是在内部它们让-Vue-能够追踪依赖，在-property-被访问和修改时通知变更。" class="headerlink" title="2.4 这些 getter/setter 对用户来说是不可见的，但是在内部它们让 Vue 能够追踪依赖，在 property 被访问和修改时通知变更。"></a>2.4 这些 getter/setter 对用户来说是不可见的，但是在内部它们让 Vue 能够追踪依赖，在 property 被访问和修改时通知变更。</h5><h5 id="2-5-每个组件实例都对应一个-watcher-实例，它会在组件渲染的过程中把“接触”过的数据-property-记录为依赖。之后当依赖项的-setter-触发时，会通知-watcher，从而使它关联的组件重新渲染。"><a href="#2-5-每个组件实例都对应一个-watcher-实例，它会在组件渲染的过程中把“接触”过的数据-property-记录为依赖。之后当依赖项的-setter-触发时，会通知-watcher，从而使它关联的组件重新渲染。" class="headerlink" title="2.5 每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。"></a>2.5 每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。</h5><img src="https://user-gold-cdn.xitu.io/2020/5/21/172362b61334efbc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="avatar" style="zoom:50%;" />
+
+<h4 id="3-深入理解"><a href="#3-深入理解" class="headerlink" title="3.深入理解"></a>3.深入理解</h4><h5 id="3-1-监听器-Observer："><a href="#3-1-监听器-Observer：" class="headerlink" title="3.1 监听器 Observer："></a>3.1 <strong>监听器 Observer</strong>：</h5><p>对数据对象进行遍历，包括子属性对象的属性，利用 Object.defineProperty() 对属性都加上 setter 和 getter。这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">  <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    <span class="keyword">get</span>: function reactiveGetter () &#123;</span><br><span class="line">      <span class="keyword">const</span> value = getter ? getter.call(obj) : val</span><br><span class="line">      <span class="keyword">if</span> (Dep.target) &#123;</span><br><span class="line">        dep.depend()</span><br><span class="line">        <span class="keyword">if</span> (childOb) &#123;</span><br><span class="line">          childOb.dep.depend()</span><br><span class="line">          <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</span><br><span class="line">            dependArray(value)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> value</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">set</span>: function reactiveSetter (newVal) &#123;</span><br><span class="line">      <span class="keyword">const</span> value = getter ? getter.call(obj) : val</span><br><span class="line">      <span class="keyword">if</span> (newVal === value || (newVal !== newVal &amp;&amp; value !== value)) &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span> &amp;&amp; customSetter) &#123;</span><br><span class="line">        customSetter()</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (getter &amp;&amp; !setter) <span class="keyword">return</span></span><br><span class="line">      <span class="keyword">if</span> (setter) &#123;</span><br><span class="line">        setter.call(obj, newVal)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        val = newVal</span><br><span class="line">      &#125;</span><br><span class="line">      childOb = !shallow &amp;&amp; observe(newVal)</span><br><span class="line">      dep.notify()	<span class="comment">// 通知相关依赖更新</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-解析器-Compile："><a href="#3-2-解析器-Compile：" class="headerlink" title="3.2 解析器 Compile："></a>3.2 解析器 Compile：</h5><p>解析 Vue 模板指令，将模板中的变量都替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，调用更新函数进行数据更新。</p>
+<h5 id="3-3-订阅者-Watcher："><a href="#3-3-订阅者-Watcher：" class="headerlink" title="3.3 订阅者 Watcher："></a>3.3 <strong>订阅者 Watcher</strong>：</h5><p>Watcher 订阅者是 Observer 和 Compile 之间通信的桥梁 ，主要的任务是订阅 Observer 中的属性值变化的消息，当收到属性值变化的消息时，触发解析器 Compile 中对应的更新函数。每个组件实例都有相应的 watcher 实例对象，它会在组件渲染的过程中把属性记录为依赖，之后当依赖项的 setter 被调用时，会通知 watcher 重新计算，从而致使它关联的组件得以更新——这是一个典型的<a href="https://www.runoob.com/design-pattern/observer-pattern.html" target="_blank" rel="noopener">观察者模式</a></p>
+<h5 id="3-4-订阅器-Dep："><a href="#3-4-订阅器-Dep：" class="headerlink" title="3.4 订阅器 Dep："></a>3.4 <strong>订阅器 Dep</strong>：</h5><p>订阅器采用 发布-订阅 设计模式，用来收集订阅者 Watcher，对监听器 Observer 和 订阅者 Watcher 进行统一管理。</p>
+<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><p><a href="https://juejin.im/post/5ec358126fb9a0432a3c49e6#comment" target="_blank" rel="noopener">原文…</a></p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/05/25/%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8Bvue2.x%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/">http://andypoplar.github.io/2020/05/25/%E8%AF%B7%E8%AF%B4%E4%B8%80%E4%B8%8Bvue2.x%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%9D%A2%E8%AF%95/"># 面试</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/05/24/%E5%89%8D%E7%AB%AF%E9%85%8D%E7%BD%AEnginx%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">前端配置nginx解决跨域问题</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
