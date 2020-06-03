@@ -195,7 +195,7 @@
                             
                         </span>
                     
-                    <span id="/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/" class="leancloud-visitors view" data-flag-title="【继承系列】JS中的原型链继承">
+                    <span id="/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/" class="leancloud-visitors view" data-flag-title="【继承系列】JS中的原型链继承">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -250,15 +250,21 @@
 </li>
 </ul>
 <h3 id="2-总结"><a href="#2-总结" class="headerlink" title="2.总结"></a>2.总结</h3><p>现在我们就可以得出原型链继承它的优点和缺点了</p>
-<p><strong>优点：</strong></p>
+<ul>
+<li><p><strong>优点：</strong></p>
 <ul>
 <li>继承了父类的模板，又继承了父类的原型对象</li>
 </ul>
-<p><strong>缺点：</strong></p>
+</li>
+</ul>
+<ul>
+<li><p><strong>缺点：</strong></p>
 <ul>
 <li>来自原型对象的所有属性都被共享了，这样如果不小心修改了原型对象中的引用类型属性，那么所有子类创建的实例对象都会受到影响(这点从修改child1.colors可以看出来)</li>
 <li>如果要给子类的原型上新增属性和方法，就必须放在Child.prototype = new Parent()这样的语句后面，如果放在前面当然找不到原型呀，因为这句话连接了父类与子类(具体看图)</li>
 <li>创建子类时，无法向父类构造函数传参数(这点从child1.name可以看出来)</li>
+</ul>
+</li>
 </ul>
 <h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><p><a href="https://mp.weixin.qq.com/s/Kc7cYihYXIKrQWX9n5tJjQ" target="_blank" rel="noopener">48道原型题目</a></p>
 
@@ -275,7 +281,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/">http://andypoplar.github.io/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/</a></span>
+                        <span><a href="http://andypoplar.github.io/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/">http://andypoplar.github.io/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/</a></span>
                     </p>
                 
                 
@@ -307,6 +313,8 @@
             </div>
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
+            
+                <a class="prev" rel="prev" href="/2020/06/03/JS/JS%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/">【继承系列】JS中的构造函数继承</a>
             
             
             <a class="next" rel="next" href="/2020/06/01/JS/export%20default%20function%20%E5%92%8C%20export%20function%20%E7%9A%84%E5%8C%BA%E5%88%AB/">export default function,export function区别</a>
