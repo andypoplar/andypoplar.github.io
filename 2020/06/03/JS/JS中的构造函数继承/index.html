@@ -260,7 +260,7 @@
 <p>这句话意思是：Parent.protorype不在实例child1的原型链上，因此也就有了题目1.4中实例不能使用构造函数原型对象上的属性和方法</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, <span class="string">'child'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1) <span class="comment">// Child &#123;sex: "boy", name: "child"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Child) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Parent) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>构造函数继承：</p>
+<h3 id="2-总结"><a href="#2-总结" class="headerlink" title="2.总结"></a>2.总结</h3><p>构造函数继承：</p>
 <ul>
 <li>优点：<ul>
 <li>解决了原型链继承中子类实例共享父类引用对象的问题</li>
@@ -322,6 +322,8 @@
             </div>
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
+            
+                <a class="prev" rel="prev" href="/2020/06/04/JS/JS%E4%B8%AD%E7%9A%84%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/">【继承系列】JS中的组合继承</a>
             
             
             <a class="next" rel="next" href="/2020/06/02/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF/">【继承系列】JS中的原型链继承</a>
