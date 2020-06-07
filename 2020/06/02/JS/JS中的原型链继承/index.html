@@ -215,7 +215,7 @@
 <li>child1是Child的实例对象，有属性name</li>
 <li>子类构造函数Child它的原型被指向了父类构造函数Parent创建出来的”无名实例”</li>
 <li>这样的话，我child1就可以使用你这个”无名实例”里的所有属性和方法，因此child1.getName()有效。<code>console.log(this.name)</code>这里因为child1中有属性name，就不再沿原型链寻找name，可以尝试把Child中name去掉，结果就是’Parent’</li>
-<li>另外由于sex、getName都是Child原型对象上的属性，所以并不会表现在child1上。</li>
+<li>另外由于sex、getName都是Child上的属性，所以并不会表现在child1上。</li>
 </ul>
 <p>这就是原型链继承，我们看张图，我是喜欢用三角来画原型三角恋的</p>
 <p><img src="/images/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF.png" alt="alt"></p>
