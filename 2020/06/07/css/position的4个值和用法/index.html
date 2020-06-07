@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>position的4个值和用法 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">position的4个值和用法</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 7, 2020&nbsp;&nbsp;10:12:32</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Css/">Css</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/06/07/css/position%E7%9A%844%E4%B8%AA%E5%80%BC%E5%92%8C%E7%94%A8%E6%B3%95/" class="leancloud-visitors view" data-flag-title="position的4个值和用法">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <h2 id="1-position的4个值"><a href="#1-position的4个值" class="headerlink" title="1. position的4个值"></a>1. position的4个值</h2><p>我理解的四个值为</p>
+<ul>
+<li>absolute</li>
+<li>relative</li>
+<li>fixed</li>
+<li>sticky</li>
+</ul>
+<h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2. 用法"></a>2. 用法</h2><h3 id="2-1-absolute"><a href="#2-1-absolute" class="headerlink" title="2.1 absolute"></a>2.1 absolute</h3><blockquote>
+<p>position:absolute 绝对定位</p>
+</blockquote>
+<p>TOP、RIGHT、BOTTOM、LEFT(下面简称TRBL)</p>
+<ul>
+<li>如果元素<strong>没有设定</strong>TRBL并且父级没有设定position属性，那么当前设置absolute的元素默认依据父级的坐标原始点为原始点。</li>
+<li>如果元素<strong>设定</strong>TRBL并且父级没有设定position属性，那么当前设置absolute的元素则以浏览器左上角为原始点进行定位，位置将由TRBL决定。</li>
+</ul>
+<p>看个🌰：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.child</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">1px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;div class="parent"&gt;我是parent</span><br><span class="line">  &lt;div class="child"&gt;我是child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/images/absolute1.png" alt="avatar"></p>
+<ul>
+<li>如果父级设定position:absolute属性，那么当前设置absolute的元素则以父元素为原始点进行定位，位置将由TRBL决定。</li>
+</ul>
+<p>看个🌰：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.child</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;div class="parent"&gt;我是parent</span><br><span class="line">  &lt;div class="child"&gt;我是child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/images/absolute2.png" alt="avatar"></p>
+<ul>
+<li>给父元素加上position:absolute，元素就脱离了文档流</li>
+</ul>
+<p>关于文档流</p>
+<blockquote>
+<p>文档流中：内联元素默认从左到右流，遇到阻碍或者宽度不够自动换行，继续按照从左到右的方式布局。块级元素单独占据一行，并按照从上到下的方式布局。</p>
+</blockquote>
+<ul>
+<li>文档流是相对于盒子模型讲的。</li>
+<li>文本流是相对于文子段落讲的。</li>
+<li>元素浮动之后，会让它跳出文档流，也就是说当它后面还有元素时，其他元素会无视它所占据了的区域，直接在它身下布局。但是文字却会认同浮动元素所占据的区域，围绕它布局，也就是没有拖出文本流。</li>
+<li>但是绝对定位后，不仅元素盒子会拖出文档流，文字也会出文本流。那么后面元素的文本就不会在认同它的区域位置，会直接在它后面布局，不会在环绕。当然你可以使用 z-index 来让底部的元素到上面来，类似于一个图层的概念</li>
+</ul>
+<p><a href="https://www.zhihu.com/question/21911352/answer/102028085" target="_blank" rel="noopener">知乎</a></p>
+<p>看个🌰：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.child</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.normal</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background</span>:red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class="parent"&gt;我是parent</span><br><span class="line">  &lt;div class="child"&gt;我是child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class="normal"&gt;正常文档流&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/images/absolute3.png" alt="avatar"></p>
+<p>可以看到class为parent的元素已经脱离了文档流，与正常文档流重叠。</p>
+<p>如果，设定，太多了看的是不是很烦躁，还是画个表格吧。</p>
+<p>x轴：父元素，y轴：子元素</p>
+<table>
+<thead>
+<tr>
+<th>x:父元素,y:子元素</th>
+<th>position:absolute(脱离文档流)</th>
+<th>无position:absolute</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>position:absolute</td>
+<td>父级为原始点</td>
+<td>子元素设定TRBL ? 浏览器左上角为原始点 : 父级为原始点</td>
+</tr>
+<tr>
+<td>无position:absolute</td>
+<td>设置TRBL无效</td>
+<td>正常文档流</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-relative"><a href="#2-2-relative" class="headerlink" title="2.2 relative"></a>2.2 relative</h3><blockquote>
+<p>position:relative 相对定位</p>
+</blockquote>
+<p>当元素被设置相对定位后，将自动产生层叠，他的层叠级别自然的高于文档流，除非设置其z-index值为负值。并且参照元素的原位置进行移动，但是原位置仍然保留空间。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">  <span class="selector-class">.box1</span>,<span class="selector-class">.box2</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: yellow;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">20px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.box2</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class="box1"&gt;box1&lt;/div&gt;</span><br><span class="line">&lt;div class="box2"&gt;box2&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="/images/relative1.png" alt="avatar"></p>
+<p>上面说的是单一的相对定位，而在实际的应用中我们常常会需要用到一种特别的形式。即希望定位元素要有绝对定位的特性，但是又希望绝对定位的坐标原点可以固定在网页中的某一个点，当这个点被移动时绝对定位元素能保证相对于这个原坐标的相对位置。要实现这种效果基本方式就是为这个绝对定位的父级设置为相对定位或是绝对定位。那么绝对定位的坐标就会以父级为坐标起始点。</p>
+<h3 id="2-3-fixed"><a href="#2-3-fixed" class="headerlink" title="2.3 fixed"></a>2.3 fixed</h3><blockquote>
+<p>position:fixed 固定定位</p>
+</blockquote>
+<ul>
+<li>固定定位与绝对定位很像，唯一不同的是绝对定位是被固定在网页中的某一个位置，而固定定位则是固定在浏览器的视框位置。</li>
+<li>元素会被移出正常文档流</li>
+</ul>
+<h3 id="2-4-sticky"><a href="#2-4-sticky" class="headerlink" title="2.4 sticky"></a>2.4 sticky</h3><blockquote>
+<p>position:sticky 粘性定位</p>
+</blockquote>
+<p>这是一个结合了 position:relative 和 position:fixed 两种定位功能于一体的特殊定位，适用于一些特殊场景。</p>
+<p>什么是结合两种定位功能于一体呢？</p>
+<p>元素先按照普通文档流定位，然后相对于该元素在流中的 flow root（BFC）和 containing block（最近的块级祖先元素）定位。</p>
+<p>而后，元素定位表现为在跨越特定阈值前为相对定位，之后为固定定位。</p>
+<p>这个特定阈值指的是 top, right, bottom 或 left 之一，换言之，指定 top, right, bottom 或 left 四个阈值其中之一，才可使粘性定位生效。否则其行为与相对定位相同。</p>
+<p>嗯，上面的文字描述估计还是很难理解,来个示例</p>
+<p><img src="https://cloud.githubusercontent.com/assets/8554143/22967003/97af8828-f39f-11e6-82db-55405160eea3.gif" alt="avatar"></p>
+<p>按照常规做法，大概是监听页面 scroll 事件，判断每一区块距离视口顶部距离，超过了则设定该区块 position:fixed，反之去掉。</p>
+<p>而使用 position:sticky ，则可以非常方便的实现</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">background</span>: <span class="selector-id">#eee</span>;</span></span><br><span class="line">    width: 600px;</span><br><span class="line">    height: 1000px;</span><br><span class="line">    margin: 0 auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="css"><span class="selector-class">.sticky-box</span> &#123;</span></span><br><span class="line">    position: -webkit-sticky;</span><br><span class="line">    position: sticky;</span><br><span class="line">    height: 60px;</span><br><span class="line">    margin-bottom: 30px;</span><br><span class="line"><span class="css">    <span class="selector-tag">background</span>: <span class="selector-id">#ff7300</span>;</span></span><br><span class="line">    top: 0px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div &#123;</span><br><span class="line">    font-size: 30px;</span><br><span class="line">    text-align: center;</span><br><span class="line"><span class="css">    <span class="selector-tag">color</span>: <span class="selector-id">#fff</span>;</span></span><br><span class="line">    line-height: 60px;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-box"</span>&gt;</span>内容1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-box"</span>&gt;</span>内容2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-box"</span>&gt;</span>内容3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-box"</span>&gt;</span>内容4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>嗯，看看上面的 CSS 代码，只需要给每个内容区块加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">position</span>: -webkit-sticky;</span><br><span class="line">    <span class="attribute">position</span>: sticky;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单描述下生效过程，因为设定的阈值是 top:0 ，这个值表示当元素距离页面视口（Viewport，也就是fixed定位的参照）顶部距离大于 0px 时，元素以 relative 定位表现，而当元素距离页面视口小于 0px 时，元素表现为 fixed 定位，也就会固定在顶部。</p>
+<p><strong>生效规则</strong><br>position:sticky 的生效是有一定的限制的，总结如下：</p>
+<ol>
+<li><p>须指定 top, right, bottom 或 left 四个阈值其中之一，才可使粘性定位生效。否则其行为与相对定位相同。</p>
+<ul>
+<li>并且 top 和 bottom 同时设置时，top 生效的优先级高，left 和 right 同时设置时，left 的优先级高。</li>
+</ul>
+</li>
+<li><p>设定为 position:sticky 元素的任意父节点的 overflow 属性必须是 visible，否则 position:sticky 不会生效。这里需要解释一下：</p>
+<ul>
+<li>如果 position:sticky 元素的任意父节点定位设置为 overflow:hidden，则父容器无法进行滚动，所以 position:sticky 元素也不会有滚动然后固定的情况。</li>
+<li>如果 position:sticky 元素的任意父节点定位设置为 position:relative | absolute | fixed，则元素相对父元素进行定位，而不会相对 viewprot 定位。</li>
+</ul>
+</li>
+</ol>
+<ol start="3">
+<li>达到设定的阀值。这个还算好理解，也就是设定了 position:sticky 的元素表现为 relative 还是 fixed 是根据元素是否达到设定了的阈值决定的。</li>
+</ol>
+<h2 id="3-参考文章："><a href="#3-参考文章：" class="headerlink" title="3. 参考文章："></a>3. 参考文章：</h2><p><a href="https://www.cnblogs.com/coco1s/p/6402723.html" target="_blank" rel="noopener">使用 position:sticky 实现粘性布局</a><br><a href="https://www.cnblogs.com/jenry/archive/2007/07/15/818660.html" target="_blank" rel="noopener">position属性absolute与relative 详解</a></p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/06/07/css/position%E7%9A%844%E4%B8%AA%E5%80%BC%E5%92%8C%E7%94%A8%E6%B3%95/">http://andypoplar.github.io/2020/06/07/css/position%E7%9A%844%E4%B8%AA%E5%80%BC%E5%92%8C%E7%94%A8%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/06/06/JS/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%BC%8F%E7%BB%A7%E6%89%BF/">【继承系列】JS中的原型式继承</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
