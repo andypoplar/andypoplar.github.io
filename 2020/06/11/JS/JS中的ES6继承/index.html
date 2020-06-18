@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>【继承系列】JS中的ES6继承 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【继承系列】JS中的ES6继承</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 11, 2020&nbsp;&nbsp;9:21:04</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/JavaScript/">JavaScript</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/06/11/JS/JS%E4%B8%AD%E7%9A%84ES6%E7%BB%A7%E6%89%BF/" class="leancloud-visitors view" data-flag-title="【继承系列】JS中的ES6继承">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>构造函数中主要的几种继承方式都已经<font color="red" size="3">记录</font>的差不多了，接下来就让我们看看ES6中class的继承。</p>
+<p>在class 中继承主要是依靠两个东西：</p>
+<ul>
+<li>extends</li>
+<li>super</li>
+</ul>
+<p>而且对于该继承的效果和之前我们介绍过的寄生组合继承方式一样。</p>
+<p>只记录继承，class细节概念还是看下<a href="https://es6.ruanyifeng.com/#docs/class-extends" target="_blank" rel="noopener">阮一峰ES6博客</a></p>
+<h3 id="2-ES6继承"><a href="#2-ES6继承" class="headerlink" title="2. ES6继承"></a>2. ES6继承</h3><h4 id="2-1-题目一"><a href="#2-1-题目一" class="headerlink" title="2.1 题目一"></a>2.1 题目一</h4><p>理解class中的继承</p>
+<p>既然它的继承和寄生组合继承方式一样，那么让我们将寄生组合继承的题目改造一下，用class的继承方式来实现它。</p>
+<p>寄生组合继承题目：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = <span class="built_in">Object</span>.create(Parent.prototype)</span><br><span class="line">Child.prototype.constructor = Child</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child(<span class="string">'child1'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line">child1.getName()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Child)</span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Parent)</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Child&#123; <span class="attr">name</span>: <span class="string">'child1'</span>, <span class="attr">sex</span>: <span class="string">'boy'</span> &#125;</span><br><span class="line"><span class="string">'child1'</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>用class改造：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getName () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">    <span class="keyword">super</span>(name)</span><br><span class="line">    <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child(<span class="string">'child1'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line">child1.getName()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Child)</span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Parent)</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Child&#123; <span class="attr">name</span>: <span class="string">'child1'</span>, <span class="attr">sex</span>: <span class="string">'boy'</span> &#125;</span><br><span class="line"><span class="string">'child1'</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>我们发现结果并没有什么区别</p>
+<p><strong>class继承:</strong></p>
+<p><img src="/images/class%E7%BB%A7%E6%89%BF1.jpg" alt="avatar"></p>
+<p><strong>寄生组合继承：</strong></p>
+<p><img src="/images/class%E7%BB%A7%E6%89%BF2.jpg" alt="avatar"></p>
+<p>可以看到，class的继承方式完全满足于寄生组合继承。</p>
+<h4 id="2-2-题目二"><a href="#2-2-题目二" class="headerlink" title="2.2 题目二"></a>2.2 题目二</h4><p>理解extends的基本作用</p>
+<p>可以看到上面👆那道题，我们用到了两个关键的东西：<code>extends</code>和<code>super</code>。</p>
+<p><code>extends</code>从字面上来看还是很好理解的，对某个东西的延伸，继承。</p>
+<p>那如果我们单单只用<code>extends</code>不用<code>super</code>呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;</span><br><span class="line">  getName () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="comment">// constructor (name) &#123;</span></span><br><span class="line">  <span class="comment">//   super(name)</span></span><br><span class="line">  <span class="comment">//   this.sex = 'boy'</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  sex = <span class="string">'boy'</span> <span class="comment">// 实例属性sex放到外面来</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child(<span class="string">'child1'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line">child1.getName()</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<p><img src="/images/class%E7%BB%A7%E6%89%BF3.jpg" alt="avatar"></p>
+<p>我们发现，和题目一没有注释的结果一样啊<br>那是不是可以认为？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (...args) &#123;</span><br><span class="line">        <span class="keyword">super</span>(...args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，来看下<a href="https://es6.ruanyifeng.com/#docs/class" target="_blank" rel="noopener">阮一峰ES6博客</a>中对constructor的解释：</p>
+<blockquote>
+<p>constructor方法是类的默认方法，通过new命令生成对象实例时，自动调用该方法。一个类必须有constructor方法，如果没有显式定义，一个空的constructor方法会被默认添加。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以我们可以看出extends的作用：</p>
+<ul>
+<li><code>class</code>可以通过<code>extends</code>关键字实现继承父类的所有属性和方法</li>
+<li>若是使用了<code>extends</code>实现继承的子类内部没有<code>constructor</code>方法，则会被默认添加<code>constructor</code>。</li>
+</ul>
+<h4 id="2-3-题目三"><a href="#2-3-题目三" class="headerlink" title="2.3 题目三"></a>2.3 题目三</h4><p>理解super的基本作用</p>
+<p>通过上面那道题看来，constructor貌似是可有可无的角色。</p>
+<p>那么super呢，它在 class中扮演的是一个什么角色 🤔️？</p>
+<p>还是上面的题目，但是这次不使用super，看看会有什么效果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'parent'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="comment">// super(name) // 把super隐去</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line">child1.getName()</span><br></pre></td></tr></table></figure>
+<p>当你把代码放到控制台运行下，你会发现他报错了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uncaught <span class="built_in">ReferenceError</span>: Must call <span class="keyword">super</span> <span class="keyword">constructor</span> in derived class before accessing 'this' or returning from derived <span class="keyword">constructor</span></span><br></pre></td></tr></table></figure>
+<p>百度翻译一下哈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">未捕获的参考错误：在访问&quot;this&quot;或从派生构造函数返回之前，必须在派生类中调用超级构造函数</span><br></pre></td></tr></table></figure>
+<p>来看下阮一峰ES6博客中的解释</p>
+<blockquote>
+<p>子类必须在constructor方法中调用super方法，否则新建实例时会报错。这是因为子类自己的this对象，必须先通过父类的构造函数完成塑造，得到与父类同样的实例属性和方法，然后再对其进行加工，加上子类自己的实例属性和方法。如果不调用super方法，子类就得不到this对象。</p>
+</blockquote>
+<p>通俗的来讲：子类自己没有自己的this对象，而是继承父类的this对象，然后对其加工，如果不调用super的话子类就得不到this对象。</p>
+<p>由此看来，<code>super</code>函数咱还是不能省，很重要。<br>也可以看出当不写<code>constructor</code>时候，不仅仅默认添加了<code>constructor</code>也默认添加了<code>super</code>(由题目二可以看出来)</p>
+<p>这道题介绍的是<code>super</code>的基本作用，下面来说说它的具体用法吧。</p>
+<h4 id="2-4-题目四"><a href="#2-4-题目四" class="headerlink" title="2.4 题目四"></a>2.4 题目四</h4><p>super当作函数调用时</p>
+<p>super有两种用法，一种是当作函数来调用，还有一种是当做对象来使用，在这两种情况下，它的用法完全不同。</p>
+<p>之前那道题就是将它当成函数来调用的，而且我们知道在constructor中还必须得执行super()。</p>
+<blockquote>
+<p>当super被当作函数调用时，代表着父类的构造函数,ES6 要求，子类的构造函数必须执行一次super函数。</p>
+</blockquote>
+<p>注意，super虽然代表了父类的构造函数，但是返回的是子类的实例，即super内部的this指的是子类的实例，因此super()在这里相当于<code>父类.prototype.constructor.call(this)</code>。</p>
+<p>让我们来看道题验证一下：</p>
+<p>(<code>new.target</code>指向当前正在执行的那个函数，你可以理解为<code>new</code>后面的那个函数)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">new</span>.target.name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123;</span><br><span class="line">    <span class="keyword">const</span> instance = <span class="keyword">super</span>();</span><br><span class="line">    <span class="built_in">console</span>.log(instance)</span><br><span class="line">    <span class="built_in">console</span>.log(instance === <span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="keyword">const</span> parent1 = <span class="keyword">new</span> Parent()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line"><span class="built_in">console</span>.log(parent1)</span><br></pre></td></tr></table></figure>
+<p>这道题中，我在父类的<code>constructor</code>中打印出new.target.name。</p>
+<p>并且用了一个叫做<code>instance</code>的变量来盛放super()的返回值(返回子类的实例)。</p>
+<p>而刚刚我们已经说了，<code>super</code>的调用代表着父类构造函数，那么这边我在调用new Child的时候，它里面也执行了父类的constructor函数，所以console.log(new.target.name)肯定被执行了两遍了(一遍是new Child，一遍是new Parent)</p>
+<p>所以答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'Child'</span></span><br><span class="line">Child&#123;&#125;</span><br><span class="line"><span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="string">'Parent'</span></span><br><span class="line"></span><br><span class="line">Child&#123;&#125;</span><br><span class="line">Parent&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>new.target</code>代表的是new后面的那个函数，那么<code>new.target.name</code>表示的是这个函数名，所以在执行<code>new Child()</code>的时候，由于调用了<code>super()</code>，所以相当于执行了Parent中的构造函数，因此打印出了’Child’。</li>
+<li>另外，关于super()的返回值<code>instance</code>，刚刚已经说了它返回的是子类的实例，因此instance会打印出<code>Child{}</code>。</li>
+<li>上面已经说了super()的this指向子类的实例，所以true。</li>
+<li>而执行<code>new Parent</code>的时候，<code>new.target.name</code>打印出的就是<code>&#39;Parent&#39;</code>了。</li>
+<li>最后分别将child1和parent1打印出来，都没什么问题。</li>
+</ul>
+<p>最后：</p>
+<ul>
+<li>super当成函数调用时，代表父类的构造函数，且返回的是子类的实例，也就是此时super内部的this指向子类。</li>
+</ul>
+<h4 id="2-5-题目五"><a href="#2-5-题目五" class="headerlink" title="2.5 题目五"></a>2.5 题目五</h4><p><code>super</code>当成函数调用时的限制</p>
+<p>刚刚已经说明了<code>super</code>当成函数调用的时候就相当于是用call来改变了父类构造函数中的this指向，那么它的使用有什么限制呢？</p>
+<ul>
+<li>子类<code>constructor</code>中如果要使用this的话就必须放到<code>super()</code>之后</li>
+</ul>
+<p>看个🌰：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">    <span class="keyword">super</span>(name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child(<span class="string">'child1'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br></pre></td></tr></table></figure>
+<p>这里依然会报错，和2.3题目报的错一样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uncaught <span class="built_in">ReferenceError</span>: Must call <span class="keyword">super</span> <span class="keyword">constructor</span> in derived class before accessing 'this' or returning from derived <span class="keyword">constructor</span></span><br></pre></td></tr></table></figure>
+<p>这也就符合了刚刚说到的第一点：子类<code>constructor</code>中如果要使用this的话就必须放到<code>super()</code>之后。</p>
+<p>这点其实非常好理解，还记得<code>super</code>的作用吗？在<code>constructor</code>中必须得有<code>super()</code>，它就是用来产生实例this的，那么再调用它之前，肯定是访问不到this的。</p>
+<p>也就是在<code>this.sex = &#39;boy&#39;</code>这一步的时候就已经报错了</p>
+<ul>
+<li>super当成函数调用时只能在子类的<code>construtor</code>中使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">  m() &#123;</span><br><span class="line">    <span class="keyword">super</span>(); <span class="comment">// 报错</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会报错哟！</p>
+<h4 id="2-6-题目六"><a href="#2-6-题目六" class="headerlink" title="2.6 题目六"></a>2.6 题目六</h4><p><code>super</code>当成对象来使用时</p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/06/11/JS/JS%E4%B8%AD%E7%9A%84ES6%E7%BB%A7%E6%89%BF/">http://andypoplar.github.io/2020/06/11/JS/JS%E4%B8%AD%E7%9A%84ES6%E7%BB%A7%E6%89%BF/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/06/09/JS/JS%E4%B8%AD%E7%9A%84%E6%B7%B7%E5%85%A5%E6%96%B9%E5%BC%8F%E7%BB%A7%E6%89%BF/">【继承系列】JS中的混入方式继承</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
