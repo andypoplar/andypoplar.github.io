@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>【继承系列】JS中的构造函数继承 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【继承系列】JS中的构造函数继承</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 4, 2020&nbsp;&nbsp;15:34:14</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/JavaScript/">JavaScript</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/06/04/JavaScript/JS%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/" class="leancloud-visitors view" data-flag-title="【继承系列】JS中的构造函数继承">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <h3 id="1-构造函数继承"><a href="#1-构造函数继承" class="headerlink" title="1.构造函数继承"></a>1.构造函数继承</h3><blockquote>
+<p>在子类构造函数内部使用call或apply来调用父类构造函数</p>
+</blockquote>
+<p><strong>我们先来复习一下call和apply方法。</strong></p>
+<p>通过call()、apply()或者bind()方法直接指定this的绑定对象, 如foo.call(obj)使用.call()或者.apply()的函数是会直接执行的,而bind()是创建一个新的函数，需要手动调用才会执行</p>
+<p>.call()和.apply()用法基本类似，不过call接收若干个参数，而apply接收的是一个数组<br>举个🌰：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  a:<span class="string">'abc'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayA</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line">sayA.call(obj) <span class="comment">// 'abc'</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-题目一"><a href="#1-1-题目一" class="headerlink" title="1.1 题目一"></a>1.1 题目一</h4><p>构造函数的基本原理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, <span class="string">'child'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Child &#123;<span class="attr">sex</span>: <span class="string">"boy"</span>, <span class="attr">name</span>: <span class="string">"child"</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>理解：</p>
+<ul>
+<li>调用Parent函数在Child里面运行，而Parent函数的作用是为当前函数添加name属性，并且属性值是参数name</li>
+</ul>
+<p>伪代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">	<span class="comment">// 伪代码</span></span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'child'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-题目二"><a href="#1-2-题目二" class="headerlink" title="1.2 题目二"></a>1.2 题目二</h4><p>现在我在子类和父类中都加上name这个属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, <span class="string">'good boy'</span>)</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'bad boy'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br></pre></td></tr></table></figure>
+<p>按照JS的执行顺序，所以答案为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Child &#123;<span class="attr">sex</span>: <span class="string">"boy"</span>, <span class="attr">name</span>: <span class="string">"bad boy"</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，如果你把<code>Parent.call(this, &#39;good boy&#39;)</code>和<code>this.name = &#39;bad boy&#39;</code>换下位置，那肯定name就是<code>good boy</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'bad boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, <span class="string">'good boy'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Child &#123;<span class="attr">sex</span>: <span class="string">"boy"</span>, <span class="attr">name</span>: <span class="string">"good boy"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-题目三"><a href="#1-3-题目三" class="headerlink" title="1.3 题目三"></a>1.3 题目三</h4><p>构造函数继承的优点</p>
+<p>解决了<strong>原型链继承</strong>中子类共享父类引用对象的问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name, sex</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.sex = sex</span><br><span class="line">  <span class="keyword">this</span>.colors = [<span class="string">'white'</span>, <span class="string">'black'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params">name, sex</span>) </span>&#123;</span><br><span class="line">  Parent.call(<span class="keyword">this</span>, name, sex)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child(<span class="string">'child1'</span>, <span class="string">'boy'</span>)</span><br><span class="line">child1.colors.push(<span class="string">'yellow'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child2 = <span class="keyword">new</span> Child(<span class="string">'child2'</span>, <span class="string">'girl'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line"><span class="built_in">console</span>.log(child2)</span><br></pre></td></tr></table></figure>
+
+<p>在<strong>原型链继承</strong>中我们知道，子类构造函数创建的实例是会查找到原型链上的colors的，而且改动它会影响到其它的实例，这是原型链继承的一大缺点。</p>
+<p>现在使用构造函数继承，我们看下结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Child&#123; <span class="attr">name</span>: <span class="string">'child1'</span>, <span class="attr">sex</span>: <span class="string">'boy'</span>, <span class="attr">colors</span>: [<span class="string">'white'</span>, <span class="string">'black'</span>, <span class="string">'yellow'</span>] &#125;</span><br><span class="line">Child&#123; <span class="attr">name</span>: <span class="string">'child1'</span>, <span class="attr">sex</span>: <span class="string">'boy'</span>, <span class="attr">colors</span>: [<span class="string">'white'</span>, <span class="string">'black'</span>] &#125;</span><br></pre></td></tr></table></figure>
+<p>使用父类的构造函数来增强子类实例，等于是复制父类的实例属性给子类,所以现在child1和child2现在分别有它们各自的colors了，就不共享了。</p>
+<p>而且这种拷贝属于深拷贝，验证的方式是你可以把colors数组中的每一项改为一个对象，然后修改它看看。<br>举个🌰：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.colors = [&#123; <span class="attr">title</span>: <span class="string">'white'</span> &#125;, &#123; <span class="attr">title</span>: <span class="string">'black'</span> &#125;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Parent.call(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line">child1.colors[<span class="number">0</span>].name = <span class="string">'andy'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child2 = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1);</span><br><span class="line"><span class="built_in">console</span>.log(child2);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  Child &#123; colors: [ &#123; title: 'white', name: 'andy' &#125;, &#123; title: 'black' &#125; ]&#125;</span></span><br><span class="line"><span class="comment">  Child &#123; colors: [ &#123; title: 'white' &#125;, &#123; title: 'black' &#125; ] &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-题目四"><a href="#1-4-题目四" class="headerlink" title="1.4 题目四"></a>1.4 题目四</h4><p>构造函数继承只能继承父类的实例属性和方法，不能继承父类原型的属性和方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, <span class="string">'good boy'</span>)</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype.getSex = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.sex)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child1)</span><br><span class="line">child1.getSex()</span><br><span class="line">child1.getName()</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Child &#123;<span class="attr">sex</span>: <span class="string">"boy"</span>, <span class="attr">name</span>: <span class="string">"good boy"</span>&#125;</span><br><span class="line">boy</span><br><span class="line"><span class="string">`Uncaught TypeError: child1.getName is not a function`</span></span><br></pre></td></tr></table></figure>
+<p>理解：</p>
+<ul>
+<li>sex、name属性都有这个我们都可以理解</li>
+<li>getSex属于Child构造函数原型对象上的方法，我们可能是能用它的，这个也好理解</li>
+<li>而getName呢？它属于父类构造函数原型对象上的方法，使用Parent.call(this, ‘good boy’)只是让复制了一下Parent构造函数里的属性和方法，没让复制原型对象上的属性和方法。</li>
+</ul>
+<h4 id="1-5-题目五"><a href="#1-5-题目五" class="headerlink" title="1.5 题目五"></a>1.5 题目五</h4><p>实例并不是父类的实例，只是子类的实例</p>
+<blockquote>
+<p>child1 instanceof Parent ==&gt; false</p>
+</blockquote>
+<p>这句话意思是：Parent.protorype不在实例child1的原型链上，因此也就有了题目1.4中实例不能使用构造函数原型对象上的属性和方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.sex = <span class="string">'boy'</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, <span class="string">'child'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1) <span class="comment">// Child &#123;sex: "boy", name: "child"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Child) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> Parent) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(child1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-总结"><a href="#2-总结" class="headerlink" title="2.总结"></a>2.总结</h3><p>构造函数继承：</p>
+<ul>
+<li>优点：<ul>
+<li>解决了原型链继承中子类实例共享父类引用对象的问题</li>
+<li>创建子类实例时，可以向父类传递参数(见题目1.3)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>缺点：<ul>
+<li>构造继承只能继承父类的实例属性和方法，不能继承父类原型的属性和方法(见题目1.4)</li>
+<li>实例并不是父类的实例，只是子类的实例(见题目1.5)</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><p><a href="https://mp.weixin.qq.com/s/Kc7cYihYXIKrQWX9n5tJjQ" target="_blank" rel="noopener">48道原型题目</a></p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/06/04/JavaScript/JS%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/">http://andypoplar.github.io/2020/06/04/JavaScript/JS%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+                <a class="prev" rel="prev" href="/2020/06/06/JavaScript/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%BC%8F%E7%BB%A7%E6%89%BF/">【继承系列】JS中的原型式继承</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/02/JavaScript/export%20default%20function%20%E5%92%8C%20export%20function%20%E7%9A%84%E5%8C%BA%E5%88%AB/">export default function,export function区别</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
