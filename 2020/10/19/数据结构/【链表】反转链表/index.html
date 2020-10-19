@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>【链表】反转链表 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【链表】反转链表</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 19, 2020&nbsp;&nbsp;7:56:27</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/10/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" class="leancloud-visitors view" data-flag-title="【链表】反转链表">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <blockquote>
+<p>力扣题号 206</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;ListNode&#125;</span> <span class="variable">head</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;ListNode&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> reverseList = <span class="function"><span class="keyword">function</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> p1 = head</span><br><span class="line">  <span class="keyword">let</span> p2 = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">while</span>(p1) &#123;</span><br><span class="line">    <span class="keyword">const</span> temp = p1.next</span><br><span class="line">    p1.next = p2</span><br><span class="line">    p2 = p1</span><br><span class="line">    p1 = temp</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> p2</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://juejin.im/post/6844904058562543623" target="_blank" rel="noopener">最详细的反转链表图解</a></p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/10/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">http://andypoplar.github.io/2020/10/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%93%BE%E8%A1%A8/"># 链表</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/10/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/">【链表】删除链表中的节点</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
