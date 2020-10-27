@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>JavaScript数据类型之问 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">JavaScript数据类型之问</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 27, 2020&nbsp;&nbsp;12:54:36</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/JavaScript/">JavaScript</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/10/27/JavaScript/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%AE/" class="leancloud-visitors view" data-flag-title="JavaScript数据类型之问">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <blockquote>
+<p>本文参考神三元的JS灵魂之问(上)做的笔记，主要记录自己不熟悉的地方。</p>
+</blockquote>
+<h2 id="1-JS原始数据类型有哪些？引用数据类型有哪些"><a href="#1-JS原始数据类型有哪些？引用数据类型有哪些" class="headerlink" title="1. JS原始数据类型有哪些？引用数据类型有哪些?"></a>1. JS原始数据类型有哪些？引用数据类型有哪些?</h2><p>在 JS 中，存在着 7 种原始值，分别是：</p>
+<ul>
+<li>number</li>
+<li>string</li>
+<li>undefined</li>
+<li>null</li>
+<li>boolean</li>
+<li>symbol</li>
+<li>bigint</li>
+</ul>
+<p>引用数据类型:<br>对象Object（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）</p>
+<h2 id="2-null是对象吗？为什么？"><a href="#2-null是对象吗？为什么？" class="headerlink" title="2. null是对象吗？为什么？"></a>2. null是对象吗？为什么？</h2><p>结论: null不是对象。<br>解释: 虽然 typeof null 会输出 object，但是这只是 JS 存在的一个悠久 Bug。在 JS 的最初版本中使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头代表是对象然而 null 表示为全零，所以将它错误的判断为 object 。</p>
+<h2 id="3-‘1’-toString-为什么可以调用？"><a href="#3-‘1’-toString-为什么可以调用？" class="headerlink" title="3. ‘1’.toString()为什么可以调用？"></a>3. ‘1’.toString()为什么可以调用？</h2><p>其实在这个语句运行的过程中做了这样几件事情：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">Object</span>(<span class="string">'1'</span>);</span><br><span class="line">s.toString();</span><br><span class="line">s = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一步: 创建String类型实例；</li>
+<li>第二步: 调用实例方法；</li>
+<li>第三步: 执行完方法立即销毁这个实例。</li>
+</ul>
+<p>经过处理，基本的字符串值就变得跟对象一样了，上面的3个步骤也适用于Boolean、Number。</p>
+<p>引用类型与基本包装类型的主要区别就是对象的生存期：</p>
+<ul>
+<li>使用new操作符创建的引用类型的实例，在执行流离开当前作用域之前都一直保存在内存中。</li>
+<li>自动创建的基本包装类型的对象，只存在于一行代码的执行瞬间，然后立即被销毁。<br>来看下面的例子<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = <span class="string">'some text'</span>;</span><br><span class="line">s1.color = <span class="string">'red'</span>;</span><br><span class="line">alert(s1.color); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="4-0-1-0-2为什么不等于0-3？"><a href="#4-0-1-0-2为什么不等于0-3？" class="headerlink" title="4. 0.1+0.2为什么不等于0.3？"></a>4. 0.1+0.2为什么不等于0.3？</h2><p>0.1和0.2在转换成二进制后会无限循环，由于标准位数的限制后面多余的位数会被截掉，此时就已经出现了精度的损失，相加后因浮点数小数位的限制而截断的二进制数字在转换为十进制就会变成0.30000000000000004。</p>
+<h2 id="5-如何理解BigInt"><a href="#5-如何理解BigInt" class="headerlink" title="5 .如何理解BigInt?"></a>5 .如何理解BigInt?</h2><h3 id="什么是BigInt"><a href="#什么是BigInt" class="headerlink" title="什么是BigInt?"></a><strong>什么是BigInt?</strong></h3><blockquote>
+<p>BigInt是一种新的数据类型，用于当整数值大于Number数据类型支持的范围时。这种数据类型允许我们安全地对大整数执行算术操作，表示高分辨率的时间戳，使用大整数id，等等，而不需要使用库。</p>
+</blockquote>
+<h3 id="为什么需要BigInt"><a href="#为什么需要BigInt" class="headerlink" title="为什么需要BigInt?"></a><strong>为什么需要BigInt?</strong></h3><p>在JS中，所有的数字都以双精度64位浮点格式表示，那这会带来什么问题呢？</p>
+<p>这导致JS中的Number无法精确表示非常大的整数，它会将非常大的整数四舍五入，确切地说，JS中的Number类型只能安全地表示-9007199254740991(-(2^53-1))和9007199254740991（(2^53-1)），任何超出此范围的整数值都可能失去精度。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">999999999999999</span>);  <span class="comment">//=&gt;10000000000000000</span></span><br></pre></td></tr></table></figure>
+
+<p>同时也会有一定的安全性问题:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9007199254740992</span> === <span class="number">9007199254740993</span>;    <span class="comment">// → true 居然是true!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="如何创建并使用BigInt？"><a href="#如何创建并使用BigInt？" class="headerlink" title="如何创建并使用BigInt？"></a><strong>如何创建并使用BigInt？</strong></h3><p>要创建BigInt，只需要在数字末尾追加n即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log( <span class="number">9007199254740995n</span> );    <span class="comment">// → 9007199254740995n	</span></span><br><span class="line"><span class="built_in">console</span>.log( <span class="number">9007199254740995</span> );     <span class="comment">// → 9007199254740996</span></span><br></pre></td></tr></table></figure>
+
+<p>另一种创建BigInt的方法是用BigInt()构造函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BigInt(<span class="string">"9007199254740995"</span>);    <span class="comment">// → 9007199254740995n</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10n</span> + <span class="number">20n</span>;    <span class="comment">// → 30n	</span></span><br><span class="line"><span class="number">10n</span> - <span class="number">20n</span>;    <span class="comment">// → -10n	</span></span><br><span class="line">+<span class="number">10n</span>;         <span class="comment">// → TypeError: Cannot convert a BigInt value to a number	</span></span><br><span class="line"><span class="number">-10n</span>;         <span class="comment">// → -10n	</span></span><br><span class="line"><span class="number">10n</span> * <span class="number">20n</span>;    <span class="comment">// → 200n	</span></span><br><span class="line"><span class="number">20n</span> / <span class="number">10n</span>;    <span class="comment">// → 2n	</span></span><br><span class="line"><span class="number">23n</span> % <span class="number">10n</span>;    <span class="comment">// → 3n	</span></span><br><span class="line"><span class="number">10n</span> ** <span class="number">3n</span>;    <span class="comment">// → 1000n	</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">10n</span>;	</span><br><span class="line">++x;          <span class="comment">// → 11n	</span></span><br><span class="line">--x;          <span class="comment">// → 9n</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> x);   <span class="comment">//"bigint"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="值得警惕的点"><a href="#值得警惕的点" class="headerlink" title="值得警惕的点"></a><strong>值得警惕的点</strong></h3><ol>
+<li>BigInt不支持一元加号运算符, 这可能是某些程序可能依赖于 + 始终生成 Number 的不变量，或者抛出异常。另外，更改 + 的行为也会破坏 asm.js代码。</li>
+</ol>
+<ol start="2">
+<li>因为隐式类型转换可能丢失信息，所以不允许在bigint和 Number 之间进行混合操作。当混合使用大整数和浮点数时，结果值可能无法由BigInt或Number精确表示。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span> + <span class="number">10n</span>;    <span class="comment">// → TypeError</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>不能将BigInt传递给Web api和内置的 JS 函数，这些函数需要一个 Number 类型的数字。尝试这样做会报TypeError错误。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.max(<span class="number">2n</span>, <span class="number">4n</span>, <span class="number">6n</span>);    <span class="comment">// → TypeError</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>当 Boolean 类型与 BigInt 类型相遇时，BigInt的处理方式与Number类似，换句话说，只要不是0n，BigInt就被视为truthy的值。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="number">0n</span>)&#123;<span class="comment">//条件判断为false</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="number">3n</span>)&#123;<span class="comment">//条件为true</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>元素都为BigInt的数组可以进行sort。</p>
+</li>
+<li><p>BigInt可以正常地进行位运算，如|、&amp;、&lt;&lt;、&gt;&gt;和^</p>
+</li>
+</ol>
+<h3 id="浏览器兼容性"><a href="#浏览器兼容性" class="headerlink" title="浏览器兼容性"></a><strong>浏览器兼容性</strong></h3><p>caniuse的结果:</p>
+<p><img src="/images/bigint-caniuse.png" alt="avatar"></p>
+<h2 id="6-参考文章"><a href="#6-参考文章" class="headerlink" title="6. 参考文章"></a>6. 参考文章</h2><p><a href="https://juejin.im/post/6844903974378668039" target="_blank" rel="noopener">神三元</a></p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/10/27/JavaScript/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%AE/">http://andypoplar.github.io/2020/10/27/JavaScript/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%AE/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"># 数据类型</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/10/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%AD%97%E5%85%B8%E3%80%91%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/">【字典】无重复字符的最长子串</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
