@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>你不知道的JavaScript闭包 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">你不知道的JavaScript闭包</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 7, 2020&nbsp;&nbsp;19:19:53</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/JavaScript/">JavaScript</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/11/07/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E9%97%AD%E5%8C%85/" class="leancloud-visitors view" data-flag-title="你不知道的JavaScript闭包">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <h2 id="1-闭包到底是什么？"><a href="#1-闭包到底是什么？" class="headerlink" title="1. 闭包到底是什么？"></a>1. 闭包到底是什么？</h2><h3 id="1-1-理论上的闭包"><a href="#1-1-理论上的闭包" class="headerlink" title="1.1 理论上的闭包"></a>1.1 理论上的闭包</h3><p>MDN对闭包的定义：</p>
+<blockquote>
+<p>闭包是指那些能够访问自由变量的函数。</p>
+</blockquote>
+<p>那么什么是自由变量？</p>
+<blockquote>
+<p>自由变量是指在函数中使用的，但既不是 <strong>函数参数</strong> 也不是 <strong>函数的局部变量</strong> 。 </p>
+</blockquote>
+<p>由此，可以看出闭包共有两部分组成：</p>
+<blockquote>
+<p>闭包 = 函数 + 函数能够访问的自由变量</p>
+</blockquote>
+<p>举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>foo函数可以访问变量a，但是a既不是 <strong>foo函数的局部变量</strong> 也不是 <strong>foo函数的参数</strong> ，所以a就是自由变量。</p>
+<p>所以，函数foo，和自由变量a构成了一个理论上的闭包。</p>
+<blockquote>
+<p>红宝书(p178)上对于闭包的定义：闭包是指有权访问另外一个函数作用域中的变量的函数。</p>
+</blockquote>
+<p><em>接下来主要说一下实践上的闭包。</em></p>
+<h3 id="1-2-实践上的闭包"><a href="#1-2-实践上的闭包" class="headerlink" title="1.2 实践上的闭包"></a>1.2 实践上的闭包</h3><p>实践角度上的闭包：</p>
+<blockquote>
+<p>即使创建它的上下文已经被销毁，它仍然存在。</p>
+</blockquote>
+<p>这句话看起来比较抽象，来看下面的例子。</p>
+<h2 id="2-实践闭包案例解释"><a href="#2-实践闭包案例解释" class="headerlink" title="2. 实践闭包案例解释"></a>2. 实践闭包案例解释</h2><h3 id="2-1-案例"><a href="#2-1-案例" class="headerlink" title="2.1 案例"></a>2.1 案例</h3><p>可以先猜一下，下面这段代码执行后，是什么结果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">"global scope"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = checkscope();</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'local scope'</span></span><br></pre></td></tr></table></figure>
+
+<p>为什么是这个答案？</p>
+<p>可能会说沿着作用域链查找得出的结果，这个是没有问题的。</p>
+<p>但是如何牵扯到闭包的呢 ？这就需要分析下 <strong>执行上下文</strong> 的过程。</p>
+<h3 id="2-2-执行上下文内容介绍"><a href="#2-2-执行上下文内容介绍" class="headerlink" title="2.2 执行上下文内容介绍"></a>2.2 执行上下文内容介绍</h3><p>分析过程之前需要了解执行上下文相关内容：</p>
+<h4 id="2-2-1-全局上下文的变量对象"><a href="#2-2-1-全局上下文的变量对象" class="headerlink" title="2.2.1 全局上下文的变量对象"></a>2.2.1 全局上下文的变量对象</h4><blockquote>
+<p>VO：全局执行上下文中的变量对象就是全局对象。 </p>
+</blockquote>
+<h4 id="2-2-2-函数上下文的变量对象"><a href="#2-2-2-函数上下文的变量对象" class="headerlink" title="2.2.2 函数上下文的变量对象"></a>2.2.2 函数上下文的变量对象</h4><blockquote>
+<p>AO：在函数执行上下文初始化<strong>( 代码没有执行 )</strong>的时候创建的，包括函数的所有形参，函数声明，变量声明。</p>
+</blockquote>
+<p>举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> d = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">  b = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在函数执行上下文初始化时，这时候的 AO 是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AO = &#123;</span><br><span class="line">  <span class="built_in">arguments</span>: &#123;</span><br><span class="line">    <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">    length: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: <span class="literal">undefined</span>, <span class="comment">// 变量提升：仅声明不定义</span></span><br><span class="line">  c: reference to <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;&#125;, <span class="comment">// 函数提升：即声明又定义</span></span><br><span class="line">  d: <span class="literal">undefined</span> <span class="comment">// 函数表达式的提升相当于变量提升</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-3-执行上下文中的作用域链"><a href="#2-2-3-执行上下文中的作用域链" class="headerlink" title="2.2.3 执行上下文中的作用域链"></a>2.2.3 执行上下文中的作用域链</h4><blockquote>
+<p>Scope：多个上下文中的变量对象构成的链表</p>
+</blockquote>
+<p>这个Scope是由两个部分组成的</p>
+<p><strong>1、函数创建</strong></p>
+<p>当函数创建的时候，就会保存所有的父变量对象到函数的内部属性<code>[[scope]]</code>中</p>
+<p>又来举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数创建时，各自的<code>[[scope]]</code>为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">foo.[[scope]] = [</span><br><span class="line">  globalContext.VO</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">bar.[[scope]] = [</span><br><span class="line">  fooContext.AO,</span><br><span class="line">  globalContext.VO</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、函数激活</strong></p>
+<p>当函数激活时，进入函数执行上下文，首先，<strong>复制函数的<code>[[scope]]</code>属性 作为 函数执行上下文作用域链<code>Scope</code>的初始化</strong></p>
+<p>创建 AO 后，就会将活动对象 AO 添加到作用链<code>Scope</code>的最顶端。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scope = [AO].concat([[Scope]]);</span><br></pre></td></tr></table></figure>
+
+<p>至此，作用域链创建完毕。</p>
+<p>这就是与闭包有关的3个执行上下文的相关内容，当然还有this等其他属性。</p>
+<h3 id="2-3-执行上下文过程"><a href="#2-3-执行上下文过程" class="headerlink" title="2.3 执行上下文过程"></a>2.3 执行上下文过程</h3><p>分析一下刚才代码的执行上下文过程：</p>
+<p>1、执行全局代码，创建全局执行上下文，全局执行上下文被压入执行上下文栈</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">	globalContext	<span class="comment">// 全局执行上下文</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>2、全局执行上下文初始化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">  VO: [gloval], <span class="comment">// 保存全局变量对象VO: scope变量，checkscope函数</span></span><br><span class="line">  Scope: [globalContext.VO], <span class="comment">// 初始化作用域链</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>初始化的同时，checkscope函数被创建，保存<strong>父变量对象</strong>到函数的内部属性 <code>[[scope]]</code>中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">checkscope.[[scope]] = [</span><br><span class="line">	globalContext.VO	<span class="comment">// 保存父级的作用链作为自己作用域链初始化</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>3、执行checkscope函数，创建checkscope函数执行上下文，checkscope函数执行上下文被压入执行上下文栈</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ESStack = [</span><br><span class="line">	checkscopeContext,</span><br><span class="line">	globalContext</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>4、checkscope执行上下文初始化<strong>( 代码没有执行 )</strong>：</p>
+<ol>
+<li><strong>复制刚才存到函数的<code>[[scope]]</code>属性，作为函数执行上下文作用域链<code>Scope</code>的初始化</strong></li>
+<li>初始化活动对象，即加入形参、函数声明、变量声明</li>
+<li><strong>将活动对象AO压入 checkscope 作用域链最顶端</strong></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">checkscopeContext = &#123;</span><br><span class="line">  AO: &#123;</span><br><span class="line">      <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        length: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      scope: <span class="literal">undefined</span>, <span class="comment">// 变量声明</span></span><br><span class="line">      f: reference to <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;&#125;	<span class="comment">// 函数声明</span></span><br><span class="line">  &#125;,</span><br><span class="line">  Scope: [AO, globalContext.VO] <span class="comment">// 作用域链</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时 f 函数被创建，保存父变量对象到 f 函数的内部属性<code>[[scope]]</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f.[[scope]] &#x3D; [</span><br><span class="line">	checkscopeContext.AO</span><br><span class="line">	globalContext.VO</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>5、checkscope执行上下文初始化完成，代码执行，执行完后，checkscope 执行上下文从执行上下文栈中弹出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">	globalContext</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>6、执行f函数，创建 f 函数执行上下文，f 函数执行上下文被压入执行上下文栈</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">	fContext,</span><br><span class="line">	globalContext</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>7、f 执行上下文初始化，创建变量对象、作用域链等（和第4步一样）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fContext = &#123;</span><br><span class="line">  AO: &#123;</span><br><span class="line">      <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        length: <span class="number">0</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  Scope: [AO,checkscopeContext.AO, globalContext.VO]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>8、f 执行上下文初始化完成，f 函数执行，执行完后，f 函数执行上下文从执行上下文栈中弹出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">	globalContext</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-解析"><a href="#2-3-解析" class="headerlink" title="2.3 解析"></a>2.3 解析</h3><p>了解完执行过程之后，应该思考一个问题:</p>
+<p><strong>checkscope函数执行完成之后，checkscope 执行上下文从执行上下文栈中已经弹出了，根据运行结果来看，为什么还会读取到checkscope作用域下的scope的值呢？</strong></p>
+<p>现在我们看执行上下文的第7步：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fContext = &#123;</span><br><span class="line">  Scope: [AO,checkscopeContext.AO, globalContext.VO], <span class="comment">// 维护了一个作用域链</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里是维护了一个作用域链，就是因为这个作用域链，f函数仍然可以读取到<code>checkscopeContext.AO</code>的值，<strong>说明当 f 函数引用了 <code>checkscopeContext.AO</code> 中的值的时候，即使 checkscopeContext 被销毁了，但是 JavaScript 依然<code>checkscopeContext.AO</code>活在内存中</strong>，f 函数依然可以通过 f 函数的作用域链找到它。</p>
+<p>现在再看下实践角度上对闭包的定义：</p>
+<blockquote>
+<p>即使创建它的上下文已经销毁，它仍然存在</p>
+</blockquote>
+<p><strong>在这道题而言，就是创建scope的上下文已经被销毁，但是它仍然存在。</strong></p>
+<p>现在来看这句话，是不是清晰一些了。</p>
+<h2 id="3-闭包经典面试题"><a href="#3-闭包经典面试题" class="headerlink" title="3. 闭包经典面试题"></a>3. 闭包经典面试题</h2><h3 id="3-1-面试题"><a href="#3-1-面试题" class="headerlink" title="3.1 面试题"></a>3.1 面试题</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  data[i] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data[<span class="number">0</span>]();</span><br><span class="line">data[<span class="number">1</span>]();</span><br><span class="line">data[<span class="number">2</span>]();</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>让我们分析下原因：</p>
+<p>执行<code>data[0]()</code>之前，此时全局上下文的VO为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">  VO: &#123;</span><br><span class="line">    data: [...],</span><br><span class="line">    i: <span class="number">3</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当执行<code>data[0]</code>函数的时候，<code>data[0]</code>函数的作用域链为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data[<span class="number">0</span>]Context = &#123;</span><br><span class="line">  Scope: [AO, globalContext.VO]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>data[0]Context</code> 的 AO 并没有 i 值，所以会从 <code>globalContext.VO</code> 中查找，i 为 3，所以打印的结果就是 3。</p>
+<p><code>data[1]</code> 和 <code>data[2]</code> 是一样的道理。</p>
+<p>我们改成闭包看一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  data[i] = (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data[<span class="number">0</span>]();</span><br><span class="line">data[<span class="number">1</span>]();</span><br><span class="line">data[<span class="number">2</span>]();</span><br></pre></td></tr></table></figure>
+
+<p>当执行到 <code>data[0]</code> 函数之前，此时全局执行上下文的 VO 为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">  VO: &#123;</span><br><span class="line">    data: [...],</span><br><span class="line">    i: <span class="number">3</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在看起来和之前是一样的</p>
+<p>但是当执行 <code>data[0]</code> 函数的时候，<code>data[0]</code> 函数的作用域链发生了改变：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data[<span class="number">0</span>]Context = &#123;</span><br><span class="line">    Scope: [AO, 匿名函数Context.AO globalContext.VO]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>匿名函数执行上下文的AO为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">匿名函数Context = &#123;</span><br><span class="line">  AO: &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        <span class="number">0</span>: <span class="number">0</span>,</span><br><span class="line">        length: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    i: <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>data[0]Context</code> 的 AO 并没有 i 值，所以会沿着作用域链从匿名函数 Context.AO 中查找，这时候就会找到 i 为 0，找到了就不会往 globalContext.VO 中查找了，即使 globalContext.VO 也有 i 的值(值为3)，所以打印的结果就是0。</p>
+<p>data[1] 和 data[2] 是一样的道理。</p>
+<h2 id="4-参考文章"><a href="#4-参考文章" class="headerlink" title="4.参考文章"></a>4.参考文章</h2><p><a href="https://github.com/mqyqingfeng/Blog/issues/9" target="_blank" rel="noopener">讶羽github</a></p>
+<p><a href="https://www.bilibili.com/video/BV1pJ411H7Mz" target="_blank" rel="noopener">原生JS核心底层原理</a></p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/11/07/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E9%97%AD%E5%8C%85/">http://andypoplar.github.io/2020/11/07/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E9%97%AD%E5%8C%85/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/JavaScript/"># JavaScript</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%85%88%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86(%E9%9D%9E%E9%80%92%E5%BD%92%E7%89%88)/">【树】二叉树的先中序后遍历(非递归版)</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
