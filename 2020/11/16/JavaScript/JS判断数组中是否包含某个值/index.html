@@ -14,7 +14,7 @@
 
 
 
-<title>函数的arguments为什么不是数组？如何转化成数组？ | AndyPoplar</title>
+<title>JS判断数组中是否包含某个值 | AndyPoplar</title>
 
 
 
@@ -175,7 +175,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">函数的arguments为什么不是数组？如何转化成数组？</h1>
+            <h1 class="post-title">JS判断数组中是否包含某个值</h1>
             
                 <div class="post-meta">
                     
@@ -184,7 +184,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 12, 2020&nbsp;&nbsp;20:25:52</a>
+                        Date: <a href="#">November 16, 2020&nbsp;&nbsp;8:21:57</a>
                         </span>
                     
                     
@@ -195,7 +195,7 @@
                             
                         </span>
                     
-                    <span id="/2020/11/12/JavaScript/arguments%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8C%96%E6%88%90%E6%95%B0%E7%BB%84/" class="leancloud-visitors view" data-flag-title="函数的arguments为什么不是数组？如何转化成数组？">
+                    <span id="/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/" class="leancloud-visitors view" data-flag-title="JS判断数组中是否包含某个值">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -207,20 +207,27 @@
             <blockquote>
 <p>本文参考神三元的JS灵魂之问(中)做的笔记，主要记录自己不熟悉的地方。</p>
 </blockquote>
-<h2 id="函数的arguments为什么不是数组？如何转化成数组？"><a href="#函数的arguments为什么不是数组？如何转化成数组？" class="headerlink" title="函数的arguments为什么不是数组？如何转化成数组？"></a>函数的arguments为什么不是数组？如何转化成数组？</h2><p>因为arguments本身并不能调用数组方法，它是一个另外一种对象类型，只不过属性从0开始排，依次为0，1，2…最后还有callee和length属性。我们也把这样的对象称为类数组。</p>
-<p>常见的类数组还有：</p>
-<ul>
-<li>用getElementsByTagName/ClassName()获得的HTMLCollection</li>
-<li>用querySelector获得的nodeList</li>
-</ul>
-<p>类数组转换成数组：</p>
-<h3 id="1-Array-prototype-slice-call"><a href="#1-Array-prototype-slice-call" class="headerlink" title="1. Array.prototype.slice.call"></a>1. Array.prototype.slice.call</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(args.reduce(<span class="function">(<span class="params">sum, cur</span>) =&gt;</span> sum + cur));<span class="comment">//args可以调用数组原生的方法l了</span></span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<h3 id="1、array-indexOf"><a href="#1、array-indexOf" class="headerlink" title="1、array.indexOf"></a>1、array.indexOf</h3><blockquote>
+<p>此方法判断数组中是否存在某个值，如果存在，则返回数组元素的下标，否则返回-1。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> index=arr.indexOf(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(index); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Array-from"><a href="#2-Array-from" class="headerlink" title="2.    Array.from()"></a>2.    Array.from()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> args = <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(args.reduce(<span class="function">(<span class="params">sum, cur</span>) =&gt;</span> sum + cur));<span class="comment">//args可以调用数组原生的方法啦</span></span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<h3 id="2、array-find-callback-thisArg"><a href="#2、array-find-callback-thisArg" class="headerlink" title="2、array.find(callback[,thisArg])"></a>2、array.find(callback[,thisArg])</h3><blockquote>
+<p>返回数组中满足条件的第一个元素的值，如果没有，返回undefined</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> result = arr.find(<span class="function"><span class="params">item</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item &gt; <span class="number">2</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="3-ES6展开运算符"><a href="#3-ES6展开运算符" class="headerlink" title="3. ES6展开运算符"></a>3. ES6展开运算符</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> args = [...arguments];</span><br><span class="line">  <span class="built_in">console</span>.log(args.reduce(<span class="function">(<span class="params">sum, cur</span>) =&gt;</span> sum + cur));<span class="comment">//args可以调用数组原生的方法啦</span></span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>);<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<h3 id="3、array-includes-searcElement-fromIndex"><a href="#3、array-includes-searcElement-fromIndex" class="headerlink" title="3、array.includes(searcElement[,fromIndex])"></a>3、array.includes(searcElement[,fromIndex])</h3><blockquote>
+<p>此方法判断数组中是否存在某个值，如果存在返回true，否则返回false</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">if</span>(arr.includes(<span class="number">3</span>))</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"存在"</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"不存在"</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-利用concat-apply"><a href="#4-利用concat-apply" class="headerlink" title="4. 利用concat+apply"></a>4. 利用concat+apply</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> args = <span class="built_in">Array</span>.prototype.concat.apply([], <span class="built_in">arguments</span>);<span class="comment">//apply方法会把第二个参数展开</span></span><br><span class="line">  <span class="built_in">console</span>.log(args.reduce(<span class="function">(<span class="params">sum, cur</span>) =&gt;</span> sum + cur));<span class="comment">//args可以调用数组原生的方法啦</span></span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>);<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<h3 id="4、array-findeIndex-callback-thisArg"><a href="#4、array-findeIndex-callback-thisArg" class="headerlink" title="4、array.findeIndex(callback[,thisArg])"></a>4、array.findeIndex(callback[,thisArg])</h3><blockquote>
+<p>返回数组中满足条件的第一个元素的下标，如果没有找到，返回-1</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> result = arr.findIndex(<span class="function"><span class="params">item</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item &gt; <span class="number">2</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+
         </div>
         
         <!-- 
@@ -234,7 +241,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2020/11/12/JavaScript/arguments%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8C%96%E6%88%90%E6%95%B0%E7%BB%84/">http://andypoplar.github.io/2020/11/12/JavaScript/arguments%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8C%96%E6%88%90%E6%95%B0%E7%BB%84/</a></span>
+                        <span><a href="http://andypoplar.github.io/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/">http://andypoplar.github.io/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/</a></span>
                     </p>
                 
                 
@@ -271,10 +278,8 @@
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
             
-                <a class="prev" rel="prev" href="/2020/11/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6/">【树】二叉树的最小深度</a>
             
-            
-            <a class="next" rel="next" href="/2020/11/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/">【树】二叉树的最大深度</a>
+            <a class="next" rel="next" href="/2020/11/16/JavaScript/forEach%E5%BE%AA%E7%8E%AF%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%8C%E5%A6%82%E4%BD%95%E7%BB%88%E7%AB%AF%E5%BE%AA%E7%8E%AF%EF%BC%9F/">forEach中return有效果吗？如何中断forEach循环？</a>
             
         </section>
 
