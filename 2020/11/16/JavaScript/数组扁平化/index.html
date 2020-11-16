@@ -14,7 +14,7 @@
 
 
 
-<title>JS判断数组中是否包含某个值 | AndyPoplar</title>
+<title>数组扁平化 | AndyPoplar</title>
 
 
 
@@ -175,7 +175,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">JS判断数组中是否包含某个值</h1>
+            <h1 class="post-title">数组扁平化</h1>
             
                 <div class="post-meta">
                     
@@ -184,7 +184,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 16, 2020&nbsp;&nbsp;8:21:57</a>
+                        Date: <a href="#">November 16, 2020&nbsp;&nbsp;8:36:22</a>
                         </span>
                     
                     
@@ -195,7 +195,7 @@
                             
                         </span>
                     
-                    <span id="/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/" class="leancloud-visitors view" data-flag-title="JS判断数组中是否包含某个值">
+                    <span id="/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" class="leancloud-visitors view" data-flag-title="数组扁平化">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -207,26 +207,21 @@
             <blockquote>
 <p>本文参考神三元的JS灵魂之问(中)做的笔记，主要记录自己不熟悉的地方。</p>
 </blockquote>
-<h3 id="1、array-indexOf"><a href="#1、array-indexOf" class="headerlink" title="1、array.indexOf"></a>1、array.indexOf</h3><blockquote>
-<p>此方法判断数组中是否存在某个值，如果存在，则返回数组元素的下标，否则返回-1。</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> index=arr.indexOf(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(index); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, [<span class="number">2</span>, [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]]], <span class="number">6</span>];</span><br><span class="line"><span class="keyword">let</span> str = <span class="built_in">JSON</span>.stringify(ary);</span><br></pre></td></tr></table></figure>
 
-<h3 id="2、array-find-callback-thisArg"><a href="#2、array-find-callback-thisArg" class="headerlink" title="2、array.find(callback[,thisArg])"></a>2、array.find(callback[,thisArg])</h3><blockquote>
-<p>返回数组中满足条件的第一个元素的值，如果没有，返回undefined</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> result = arr.find(<span class="function"><span class="params">item</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item &gt; <span class="number">2</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<h3 id="1、调用ES6中的flat方法"><a href="#1、调用ES6中的flat方法" class="headerlink" title="1、调用ES6中的flat方法"></a>1、调用ES6中的flat方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ary = ary.flat(<span class="literal">Infinity</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="3、array-includes-searcElement-fromIndex"><a href="#3、array-includes-searcElement-fromIndex" class="headerlink" title="3、array.includes(searcElement[,fromIndex])"></a>3、array.includes(searcElement[,fromIndex])</h3><blockquote>
-<p>此方法判断数组中是否存在某个值，如果存在返回true，否则返回false</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">if</span>(arr.includes(<span class="number">3</span>))</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"存在"</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"不存在"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="2、replace-split"><a href="#2、replace-split" class="headerlink" title="2、replace + split"></a>2、replace + split</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ary = str.replace(<span class="regexp">/(\[|\])/g</span>, <span class="string">''</span>).split(<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="4、array-findeIndex-callback-thisArg"><a href="#4、array-findeIndex-callback-thisArg" class="headerlink" title="4、array.findeIndex(callback[,thisArg])"></a>4、array.findeIndex(callback[,thisArg])</h3><blockquote>
-<p>返回数组中满足条件的第一个元素的下标，如果没有找到，返回-1</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> result = arr.findIndex(<span class="function"><span class="params">item</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> item &gt; <span class="number">2</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<h3 id="3、普通递归"><a href="#3、普通递归" class="headerlink" title="3、普通递归"></a>3、普通递归</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> result = []</span><br><span class="line"><span class="keyword">let</span> fn = <span class="function">(<span class="params">ary</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; ary.length; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> item = ary[i]</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Array</span>.isArray(item)) &#123;</span><br><span class="line">      fn(item)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.push(item)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="4、利用reduce函数迭代"><a href="#4、利用reduce函数迭代" class="headerlink" title="4、利用reduce函数迭代"></a>4、利用reduce函数迭代</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ary.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> pre.concat(<span class="built_in">Array</span>.isArray(cur) ? flatten(cur) : cur);</span><br><span class="line">    &#125;, []);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, [<span class="number">6</span>, <span class="number">7</span>]]]</span><br><span class="line"><span class="built_in">console</span>.log(flatten(ary))</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、扩展运算符与concat"><a href="#5、扩展运算符与concat" class="headerlink" title="5、扩展运算符与concat"></a>5、扩展运算符与concat</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只要有一个元素有数组，那么循环继续</span></span><br><span class="line"><span class="keyword">while</span> (ary.some(<span class="built_in">Array</span>.isArray)) &#123;</span><br><span class="line">  ary = [].concat(...ary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有一个点不明白</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...ary] <span class="comment">// [1, Array(2), 6]</span></span><br><span class="line">[].concat(...ary); <span class="comment">// [1, 2, Array(2), 6]</span></span><br></pre></td></tr></table></figure>
+<p>为什么两个不一样呢？</p>
 
         </div>
         
@@ -241,7 +236,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/">http://andypoplar.github.io/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/</a></span>
+                        <span><a href="http://andypoplar.github.io/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/">http://andypoplar.github.io/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/</a></span>
                     </p>
                 
                 
@@ -278,10 +273,8 @@
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
             
-                <a class="prev" rel="prev" href="/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/">数组扁平化</a>
             
-            
-            <a class="next" rel="next" href="/2020/11/16/JavaScript/forEach%E5%BE%AA%E7%8E%AF%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%8C%E5%A6%82%E4%BD%95%E7%BB%88%E7%AB%AF%E5%BE%AA%E7%8E%AF%EF%BC%9F/">forEach中return有效果吗？如何中断forEach循环？</a>
+            <a class="next" rel="next" href="/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/">JS判断数组中是否包含某个值</a>
             
         </section>
 
