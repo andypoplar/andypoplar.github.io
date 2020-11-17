@@ -14,7 +14,7 @@
 
 
 
-<title>数组扁平化 | AndyPoplar</title>
+<title>【树】二叉树的层序遍历 | AndyPoplar</title>
 
 
 
@@ -175,7 +175,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">数组扁平化</h1>
+            <h1 class="post-title">【树】二叉树的层序遍历</h1>
             
                 <div class="post-meta">
                     
@@ -184,18 +184,18 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 16, 2020&nbsp;&nbsp;8:36:22</a>
+                        Date: <a href="#">November 17, 2020&nbsp;&nbsp;10:16:12</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/JavaScript/">JavaScript</a>
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
                             
                         </span>
                     
-                    <span id="/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" class="leancloud-visitors view" data-flag-title="数组扁平化">
+                    <span id="/2020/11/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86/" class="leancloud-visitors view" data-flag-title="【树】二叉树的层序遍历">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -205,24 +205,11 @@
 
         <div class="post-content" style="border-bottom:1px solid lightgray;">
             <blockquote>
-<p>本文参考神三元的JS灵魂之问(中)做的笔记，主要记录自己不熟悉的地方。</p>
+<p>力扣题号 102</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, [<span class="number">2</span>, [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]]], <span class="number">6</span>];</span><br><span class="line"><span class="keyword">let</span> str = <span class="built_in">JSON</span>.stringify(ary);</span><br></pre></td></tr></table></figure>
+<h3 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;TreeNode&#125;</span> <span class="variable">root</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[][]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> levelOrder = <span class="function"><span class="keyword">function</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!root) <span class="keyword">return</span> []</span><br><span class="line">  <span class="keyword">const</span> q = [[root, <span class="number">0</span>]]</span><br><span class="line">  <span class="keyword">const</span> res = []</span><br><span class="line">  <span class="keyword">while</span>(q.length) &#123;</span><br><span class="line">    <span class="keyword">const</span> [n, level] = q.shift()</span><br><span class="line">    <span class="keyword">if</span>(!res[level]) &#123;</span><br><span class="line">      res.push([n.val])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      res[level].push(n.val)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(n.left) q.push([n.left, level + <span class="number">1</span>])</span><br><span class="line">    <span class="keyword">if</span>(n.right) q.push([n.right, level + <span class="number">1</span>])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h3 id="1、调用ES6中的flat方法"><a href="#1、调用ES6中的flat方法" class="headerlink" title="1、调用ES6中的flat方法"></a>1、调用ES6中的flat方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ary = ary.flat(<span class="literal">Infinity</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2、replace-split"><a href="#2、replace-split" class="headerlink" title="2、replace + split"></a>2、replace + split</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ary = str.replace(<span class="regexp">/(\[|\])/g</span>, <span class="string">''</span>).split(<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3、普通递归"><a href="#3、普通递归" class="headerlink" title="3、普通递归"></a>3、普通递归</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> result = []</span><br><span class="line"><span class="keyword">let</span> fn = <span class="function">(<span class="params">ary</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; ary.length; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> item = ary[i]</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Array</span>.isArray(item)) &#123;</span><br><span class="line">      fn(item)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.push(item)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4、利用reduce函数迭代"><a href="#4、利用reduce函数迭代" class="headerlink" title="4、利用reduce函数迭代"></a>4、利用reduce函数迭代</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ary.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> pre.concat(<span class="built_in">Array</span>.isArray(cur) ? flatten(cur) : cur);</span><br><span class="line">    &#125;, []);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> ary = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, [<span class="number">6</span>, <span class="number">7</span>]]]</span><br><span class="line"><span class="built_in">console</span>.log(flatten(ary))</span><br></pre></td></tr></table></figure>
-
-<h3 id="5、扩展运算符与concat"><a href="#5、扩展运算符与concat" class="headerlink" title="5、扩展运算符与concat"></a>5、扩展运算符与concat</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只要有一个元素有数组，那么循环继续</span></span><br><span class="line"><span class="keyword">while</span> (ary.some(<span class="built_in">Array</span>.isArray)) &#123;</span><br><span class="line">  ary = [].concat(...ary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里有一个点不明白</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...ary] <span class="comment">// [1, Array(2), 6]</span></span><br><span class="line">[].concat(...ary); <span class="comment">// [1, 2, Array(2), 6]</span></span><br></pre></td></tr></table></figure>
-<p>为什么两个不一样呢？</p>
-
+<h3 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;TreeNode&#125;</span> <span class="variable">root</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[][]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> levelOrder = <span class="function"><span class="keyword">function</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!root) <span class="keyword">return</span> []</span><br><span class="line">  <span class="keyword">const</span> q = [root]</span><br><span class="line">  <span class="keyword">const</span> res = []</span><br><span class="line">  <span class="keyword">while</span>(q.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> len = q.length</span><br><span class="line">    res.push([])</span><br><span class="line">    <span class="keyword">while</span>(len--) &#123;</span><br><span class="line">      <span class="keyword">const</span> n = q.shift()</span><br><span class="line">      res[res.length - <span class="number">1</span>].push(n.val)</span><br><span class="line">      <span class="keyword">if</span>(n.left) q.push(n.left)</span><br><span class="line">      <span class="keyword">if</span>(n.right) q.push(n.right)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
         </div>
         
         <!-- 
@@ -236,7 +223,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/">http://andypoplar.github.io/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/</a></span>
+                        <span><a href="http://andypoplar.github.io/2020/11/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86/">http://andypoplar.github.io/2020/11/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86/</a></span>
                     </p>
                 
                 
@@ -260,7 +247,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%8E%9F%E7%94%9FJS%E7%81%B5%E9%AD%82%E4%B9%8B%E9%97%AE-%E4%B8%AD/"># 原生JS灵魂之问(中)</a>
+                        <a href="/tags/%E6%A0%91/"># 树</a>
                     
                         
                 </span>
@@ -273,10 +260,8 @@
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
             
-                <a class="prev" rel="prev" href="/2020/11/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%91%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86/">【树】二叉树的层序遍历</a>
             
-            
-            <a class="next" rel="next" href="/2020/11/16/JavaScript/JS%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E4%B8%AA%E5%80%BC/">JS判断数组中是否包含某个值</a>
+            <a class="next" rel="next" href="/2020/11/16/JavaScript/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/">数组扁平化</a>
             
         </section>
 
