@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="AndyPoplar">
+
+
+
+    <meta name="description" content="stay hungry,stay foolish">
+
+
+
+<title>JS中的深拷贝 | AndyPoplar</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">AndyPoplar&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">AndyPoplar&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">JS中的深拷贝</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">AndyPoplar</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 23, 2020&nbsp;&nbsp;19:41:31</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/JavaScript/">JavaScript</a>
+                            
+                        </span>
+                    
+                    <span id="/2020/11/23/JavaScript/JS%E4%B8%AD%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D/" class="leancloud-visitors view" data-flag-title="JS中的深拷贝">
+                        <span class="post-meta-item-text">阅读数:</span>
+                        <span class="leancloud-visitors-count">loading</span>
+                      </span>
+                </div>
+            
+        </header>
+
+        <div class="post-content" style="border-bottom:1px solid lightgray;">
+            <h2 id="1、简易版及问题"><a href="#1、简易版及问题" class="headerlink" title="1、简易版及问题"></a>1、简易版及问题</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify());</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-无法解决循环引用问题"><a href="#1-1-无法解决循环引用问题" class="headerlink" title="1.1 无法解决循环引用问题"></a>1.1 无法解决循环引用问题</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;<span class="attr">val</span>: <span class="number">2</span>&#125;</span><br><span class="line">a.target = a</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(a))</span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// 报错 无限递归 --&gt; 栈溢出</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-无法拷贝一些特殊的对象，比如：RegExp，Date，Set，Map等"><a href="#1-2-无法拷贝一些特殊的对象，比如：RegExp，Date，Set，Map等" class="headerlink" title="1.2 无法拷贝一些特殊的对象，比如：RegExp，Date，Set，Map等"></a>1.2 无法拷贝一些特殊的对象，比如：RegExp，Date，Set，Map等</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="regexp">/[asd]/</span>)</span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(a))</span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-无法拷贝函数"><a href="#1-3-无法拷贝函数" class="headerlink" title="1.3 无法拷贝函数"></a>1.3 无法拷贝函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="function"><span class="params">()</span> =&gt;</span> b = <span class="number">2</span></span><br><span class="line"><span class="keyword">const</span> c1 = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(a))</span><br><span class="line"><span class="built_in">console</span>.log(c1) <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+
+<p>因此这个api先pass掉，我们重新写一个深拷贝，简易版如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deepClone = <span class="function">(<span class="params">target</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> target === <span class="string">"object"</span> &amp;&amp; target!==<span class="literal">null</span> ) &#123;</span><br><span class="line">      <span class="keyword">const</span> clonetarget = <span class="built_in">Array</span>.isArray(target) ? [] : &#123;&#125;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">in</span> target) &#123;</span><br><span class="line">        <span class="keyword">if</span> (target.hasOwnProperty(p)) &#123;</span><br><span class="line">          clonetarget[p] = deepClone(target[p])</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> clonetarget</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> target</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>hasOwnProperty返回一个布尔值，判断对象是否包含特定的自身（非继承）属性。因为forin是遍历原型链上的属性的</p>
+<h2 id="2、解决循环引用"><a href="#2、解决循环引用" class="headerlink" title="2、解决循环引用"></a>2、解决循环引用</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;<span class="attr">val</span>: <span class="number">100</span>&#125;;</span><br><span class="line">a.target = a</span><br><span class="line">deepClone(a) <span class="comment">// Uncaught RangeError: Maximum call stack size exceeded</span></span><br></pre></td></tr></table></figure>
+
+<p>这就是循环应用，我们怎么解决这个问题</p>
+<p>创建一个Map。记录下已经拷贝过的对象，如果说已经拷贝过，那直接返回它行了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isObject = <span class="function">(<span class="params">target</span>) =&gt;</span> (<span class="keyword">typeof</span> target === <span class="string">'object'</span> || <span class="keyword">typeof</span> target === <span class="string">'function'</span>) &amp;&amp; target !== <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> deepClone = <span class="function">(<span class="params">target, map = <span class="keyword">new</span> <span class="built_in">Map</span>(</span>)) =&gt;</span> &#123; </span><br><span class="line">  <span class="keyword">if</span>(map.get(target))  </span><br><span class="line">    <span class="keyword">return</span> target; </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isObject(target)) &#123; </span><br><span class="line">    map.set(target, <span class="literal">true</span>); </span><br><span class="line">    <span class="keyword">const</span> cloneTarget = <span class="built_in">Array</span>.isArray(target) ? []: &#123;&#125;; </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> prop <span class="keyword">in</span> target) &#123; </span><br><span class="line">      <span class="keyword">if</span> (target.hasOwnProperty(prop)) &#123; </span><br><span class="line">          cloneTarget[prop] = deepClone(target[prop], map); </span><br><span class="line">      &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> cloneTarget; </span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="keyword">return</span> target; </span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在来试一试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;<span class="attr">val</span>:<span class="number">2</span>&#125;;</span><br><span class="line">a.target = a;</span><br><span class="line"><span class="keyword">let</span> b = deepClone(a);</span><br><span class="line"><span class="built_in">console</span>.log(b)<span class="comment">//&#123; val: 2, target: &#123; val: 2, target: [Circular] &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>好像是没有问题了, 拷贝也完成了。但还是有一个潜在的坑, 就是map 上的 key 和 map 构成了强引用关系，这是相当危险的。我给你解释一下与之相对的弱引用的概念你就明白了：</p>
+<p>被弱引用的对象可以在<code>任何时候被回收</code>，而对于强引用来说，只要这个强引用还在，那么对象<code>无法被回收</code>。拿上面的例子说，map 和 a一直是强引用的关系， 在程序结束之前，a 所占的内存空间一直<code>不会被释放</code>。</p>
+<p>怎么解决这个问题？</p>
+<p>很简单，让 map 的 key 和 map 构成弱引用即可。ES6给我们提供了这样的数据结构，它的名字叫<code>WeakMap</code>，它是一种特殊的Map, 其中的键是<code>弱引用</code>的。其键必须是对象，而值可以是任意的。</p>
+<p>稍微改造一下即可:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deepClone = <span class="function">(<span class="params">target, map = <span class="keyword">new</span> <span class="built_in">WeakMap</span>(</span>)) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本文参考神三元的JS灵魂之问(中)做的笔记，主要记录自己不熟悉的地方。</p>
+
+        </div>
+        
+        <!-- 
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>AndyPoplar</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://andypoplar.github.io/2020/11/23/JavaScript/JS%E4%B8%AD%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D/">http://andypoplar.github.io/2020/11/23/JavaScript/JS%E4%B8%AD%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+         -->
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/JavaScript/"># JavaScript</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav" style="margin-bottom: 50px;">
+            
+            
+            <a class="next" rel="next" href="/2020/11/18/JavaScript/JS%E4%B8%AD%E6%B5%85%E6%8B%B7%E8%B4%9D%E7%9A%84%E6%89%8B%E6%AE%B5%E6%9C%89%E5%93%AA%E4%BA%9B/">JS中浅拷贝的手段有哪些？</a>
+            
+        </section>
+
+        
+            <section id="comments" class="comments">
+              <style>
+                .comments{margin:30px;padding:10px;background:#fff}
+                @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: 'JRD6HXTkydgICq2pwJW2cWLt-gzGzoHsz',
+      app_key: 'P2VTrxj5F97m5w1io6l7HBA3',
+      placeholder: '可以留言哦~',
+      notify: 'true',
+      verify: 'true',
+      visitor: true
+    });
+</script>
+            </section>
+        
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© AndyPoplar | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
