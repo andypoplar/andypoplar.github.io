@@ -14,7 +14,7 @@
 
 
 
-<title>冒泡排序 | AndyPoplar</title>
+<title>【贪心算法】分发饼干 | AndyPoplar</title>
 
 
 
@@ -113,7 +113,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">冒泡排序</h1>
+            <h1 class="post-title">【贪心算法】分发饼干</h1>
             
                 <div class="post-meta">
                     
@@ -122,18 +122,18 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 18, 2020&nbsp;&nbsp;13:08:03</a>
+                        Date: <a href="#">December 25, 2020&nbsp;&nbsp;9:10:10</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
                             
                         </span>
                     
-                    <span id="/2020/10/18/%E7%AE%97%E6%B3%95/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" class="leancloud-visitors view" data-flag-title="冒泡排序">
+                    <span id="/2020/12/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E3%80%91%E5%88%86%E5%8F%91%E9%A5%BC%E5%B9%B2/" class="leancloud-visitors view" data-flag-title="【贪心算法】分发饼干">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -142,7 +142,10 @@
         </header>
 
         <div class="post-content" style="border-bottom:1px solid lightgray;">
-            
+            <blockquote>
+<p>力扣原题 455</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">g</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> findContentChildren = <span class="function"><span class="keyword">function</span>(<span class="params">g, s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> sortFunc = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b</span><br><span class="line">  g.sort(sortFunc)</span><br><span class="line">  s.sort(sortFunc)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">  s.forEach(<span class="function"><span class="params">n</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (g[i] &amp;&amp; n &gt;= g[i]) &#123;</span><br><span class="line">      i += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> i</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
         </div>
         
         <!-- 
@@ -156,7 +159,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2020/10/18/%E7%AE%97%E6%B3%95/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">http://andypoplar.github.io/2020/10/18/%E7%AE%97%E6%B3%95/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/</a></span>
+                        <span><a href="http://andypoplar.github.io/2020/12/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E3%80%91%E5%88%86%E5%8F%91%E9%A5%BC%E5%B9%B2/">http://andypoplar.github.io/2020/12/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E3%80%91%E5%88%86%E5%8F%91%E9%A5%BC%E5%B9%B2/</a></span>
                     </p>
                 
                 
@@ -180,7 +183,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%8E%92%E5%BA%8F/"># 排序</a>
+                        <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/"># 贪心算法</a>
                     
                         
                 </span>
@@ -193,10 +196,8 @@
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
             
-                <a class="prev" rel="prev" href="/2020/10/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%98%9F%E5%88%97%E3%80%91%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E6%A8%A1%E6%8B%9F%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97/">【队列】用两个栈模拟一个队列</a>
             
-            
-            <a class="next" rel="next" href="/2020/10/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%A0%88%E3%80%91%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/">【栈】有效的括号</a>
+            <a class="next" rel="next" href="/2020/12/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E3%80%91%E7%AE%80%E4%BB%8B/">【贪心算法】简介</a>
             
         </section>
 
