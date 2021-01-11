@@ -14,7 +14,7 @@
 
 
 
-<title>【动态规划】打家劫舍 | AndyPoplar</title>
+<title>【回溯算法】简介 | AndyPoplar</title>
 
 
 
@@ -113,7 +113,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【动态规划】打家劫舍</h1>
+            <h1 class="post-title">【回溯算法】简介</h1>
             
                 <div class="post-meta">
                     
@@ -122,7 +122,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 5, 2021&nbsp;&nbsp;18:55:52</a>
+                        Date: <a href="#">January 11, 2021&nbsp;&nbsp;8:40:52</a>
                         </span>
                     
                     
@@ -133,7 +133,7 @@
                             
                         </span>
                     
-                    <span id="/2021/01/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E3%80%91%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/" class="leancloud-visitors view" data-flag-title="【动态规划】打家劫舍">
+                    <span id="/2021/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E7%AE%80%E4%BB%8B/" class="leancloud-visitors view" data-flag-title="【回溯算法】简介">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -142,13 +142,9 @@
         </header>
 
         <div class="post-content" style="border-bottom:1px solid lightgray;">
-            <blockquote>
-<p>力扣题号 198</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> rob = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (nums.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  <span class="keyword">const</span> dp = [<span class="number">0</span>, nums[<span class="number">0</span>]] <span class="comment">// 前 n 家能偷到的最大数额，前0家偷到的钱为 0</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">2</span>;i &lt;= nums.length; i++) &#123; </span><br><span class="line">    dp[i] = <span class="built_in">Math</span>.max(dp[i - <span class="number">2</span>] + nums[i - <span class="number">1</span>], dp[i - <span class="number">1</span>])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[dp.length - <span class="number">1</span>]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+            <p>一条路走不通再去走另外一条路</p>
+<p>比如：数组的全排列问题</p>
 
-<p>优化后.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> rob = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (nums.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> dp0 = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> dp1 = nums[<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">2</span>;i &lt;= nums.length; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> dp2 = <span class="built_in">Math</span>.max(dp0 + nums[i - <span class="number">1</span>], dp1)</span><br><span class="line">    dp0 = dp1</span><br><span class="line">    dp1 = dp2</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp1</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
         </div>
         
         <!-- 
@@ -162,7 +158,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2021/01/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E3%80%91%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/">http://andypoplar.github.io/2021/01/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E3%80%91%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/</a></span>
+                        <span><a href="http://andypoplar.github.io/2021/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E7%AE%80%E4%BB%8B/">http://andypoplar.github.io/2021/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E7%AE%80%E4%BB%8B/</a></span>
                     </p>
                 
                 
@@ -186,7 +182,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"># 动态规划</a>
+                        <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"># 回溯算法</a>
                     
                         
                 </span>
@@ -199,10 +195,10 @@
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
             
-                <a class="prev" rel="prev" href="/2021/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E7%AE%80%E4%BB%8B/">【回溯算法】简介</a>
+                <a class="prev" rel="prev" href="/2021/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E5%85%A8%E6%8E%92%E5%88%97/">【回溯算法】全排列</a>
             
             
-            <a class="next" rel="next" href="/2020/12/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E3%80%91%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/">【贪心算法】买卖股票的最佳时机</a>
+            <a class="next" rel="next" href="/2021/01/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E3%80%91%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/">【动态规划】打家劫舍</a>
             
         </section>
 
