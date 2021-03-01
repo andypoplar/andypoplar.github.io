@@ -14,7 +14,7 @@
 
 
 
-<title>【回溯算法】子集 | AndyPoplar</title>
+<title>【链表】链表中倒数第k个节点 | AndyPoplar</title>
 
 
 
@@ -113,7 +113,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【回溯算法】子集</h1>
+            <h1 class="post-title">【链表】链表中倒数第k个节点</h1>
             
                 <div class="post-meta">
                     
@@ -122,7 +122,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 12, 2021&nbsp;&nbsp;8:46:21</a>
+                        Date: <a href="#">March 1, 2021&nbsp;&nbsp;8:41:36</a>
                         </span>
                     
                     
@@ -133,7 +133,7 @@
                             
                         </span>
                     
-                    <span id="/2021/01/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E5%AD%90%E9%9B%86/" class="leancloud-visitors view" data-flag-title="【回溯算法】子集">
+                    <span id="/2021/03/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/" class="leancloud-visitors view" data-flag-title="【链表】链表中倒数第k个节点">
                         <span class="post-meta-item-text">阅读数:</span>
                         <span class="leancloud-visitors-count">loading</span>
                       </span>
@@ -143,10 +143,9 @@
 
         <div class="post-content" style="border-bottom:1px solid lightgray;">
             <blockquote>
-<p>力扣题号 78</p>
+<p>力扣原题：22剑指offer</p>
 </blockquote>
-<p>时间复杂度：O(2 ^ N) 每个元素都有两种可能<br>空间复杂度：O(N)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[][]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> subsets = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res = []</span><br><span class="line">  <span class="keyword">const</span> backtrack = <span class="function">(<span class="params">path, l, start</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(path.length === l) &#123;</span><br><span class="line">      res.push(path)</span><br><span class="line">      <span class="keyword">return</span> </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = start; i &lt; nums.length; i++) &#123;</span><br><span class="line">      backtrack(path.concat(nums[i]), l, i + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= nums.length; i++) &#123;</span><br><span class="line">    backtrack([], i, <span class="number">0</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;ListNode&#125;</span> <span class="variable">head</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">k</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;ListNode&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> getKthFromEnd = <span class="function"><span class="keyword">function</span>(<span class="params">head, k</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> fast = head</span><br><span class="line">  <span class="keyword">let</span> slow = head</span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(i &lt; k) &#123;</span><br><span class="line">    fast = fast.next</span><br><span class="line">    i++</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(fast) &#123;</span><br><span class="line">    fast = fast.next</span><br><span class="line">    slow = slow.next</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> slow</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
         <!-- 
@@ -160,7 +159,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://andypoplar.github.io/2021/01/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E5%AD%90%E9%9B%86/">http://andypoplar.github.io/2021/01/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E5%AD%90%E9%9B%86/</a></span>
+                        <span><a href="http://andypoplar.github.io/2021/03/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/">http://andypoplar.github.io/2021/03/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/</a></span>
                     </p>
                 
                 
@@ -184,7 +183,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"># 回溯算法</a>
+                        <a href="/tags/%E9%93%BE%E8%A1%A8/"># 链表</a>
                     
                         
                 </span>
@@ -197,10 +196,8 @@
         </section>
         <section class="post-nav" style="margin-bottom: 50px;">
             
-                <a class="prev" rel="prev" href="/2021/03/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E9%93%BE%E8%A1%A8%E3%80%91%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/">【链表】链表中倒数第k个节点</a>
             
-            
-            <a class="next" rel="next" href="/2021/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E5%85%A8%E6%8E%92%E5%88%97/">【回溯算法】全排列</a>
+            <a class="next" rel="next" href="/2021/01/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E3%80%91%E5%AD%90%E9%9B%86/">【回溯算法】子集</a>
             
         </section>
 
